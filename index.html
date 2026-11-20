@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#49382F">
+<title>NutriLock | Personal Health Archive</title>
+<style>
+:root{
+  --mocha:#49382F;
+  --coffee:#96745B;
+  --champagne:#D9C5A9;
+  --cream:#F5EDE1;
+  --paper:#FFFCF7;
+  --ink:#382C26;
+  --muted:#76675C;
+  --line:#E8DED1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--cream);color:var(--ink);
+  font-family:Arial,sans-serif;line-height:1.65;
+}
+button,a{font:inherit}
+a{color:inherit}
+button:focus-visible,a:focus-visible{
+  outline:3px solid var(--coffee);outline-offset:4px
+}
+.layout{display:flex;min-height:100vh}
+.sidebar{
+  width:255px;position:fixed;inset:0 auto 0 0;
+  background:var(--mocha);color:white;padding:30px 20px;
+  overflow-y:auto;z-index:5
+}
+.logo{font-family:Georgia,serif;font-size:29px;letter-spacing:1px}
+.logo-sub{font-size:10px;letter-spacing:2px;color:var(--champagne);margin-bottom:38px}
+.nav-title{font-size:11px;letter-spacing:2px;color:var(--champagne);margin:25px 0 10px}
+.nav-link{
+  display:block;text-decoration:none;color:#F5EDE1;
+  padding:12px 13px;border-radius:9px;margin:4px 0
+}
+.nav-link:hover,.nav-link.active{background:#705746}
+.sidebar-note{
+  margin-top:35px;border:1px solid #806A59;border-radius:12px;
+  padding:15px;color:#E8DACA;font-size:13px
+}
+main{margin-left:255px;width:calc(100% - 255px);padding:30px 5%}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:32px}
+.topbar small{color:var(--muted)}
+.guest{background:white;border:1px solid var(--line);border-radius:30px;padding:10px 15px}
+.hero{
+  background:var(--mocha);color:white;padding:45px;
+  border-radius:20px;display:flex;align-items:center;
+  justify-content:space-between;gap:20px
+}
+.eyebrow{font-size:11px;letter-spacing:2px;color:var(--champagne)}
+h1,h2,h3{font-family:Georgia,serif;color:var(--mocha);line-height:1.25}
+h1{font-size:clamp(35px,4vw,51px);font-weight:normal;color:var(--cream)}
+h2{font-size:30px;font-weight:normal}
+h3{font-size:21px}
+.hero p{color:#E8DACA;max-width:510px}
+.hero-mark{font-family:Georgia,serif;font-size:100px;color:var(--champagne)}
+.btn{
+  display:inline-block;padding:13px 20px;border:0;border-radius:8px;
+  background:var(--champagne);color:var(--mocha);
+  text-decoration:none;font-weight:bold;cursor:pointer
+}
+.section{margin:45px 0;scroll-margin-top:25px}
+.intro{max-width:650px;color:var(--muted)}
+.tag{font-size:11px;letter-spacing:1.5px;color:var(--coffee);font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}
+.card{
+  background:var(--paper);padding:24px;border:1px solid var(--line);
+  border-radius:15px
+}
+.card p{color:var(--muted)}
+.card-icon{font-size:28px}
+.card a{color:#79573E;font-weight:bold;text-decoration:none}
+.card a:hover{text-decoration:underline}
+.featured{background:#E9DCCB}
+.dark-card{background:var(--mocha);color:white}
+.dark-card h3{color:var(--cream)}
+.dark-card p{color:#E8DACA}
+.dark-card a{color:var(--champagne)}
+.archive{
+  background:var(--paper);border:1px solid var(--line);
+  border-radius:14px;padding:22px
+}
+.archive-row{
+  padding:14px 0;border-bottom:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:12px
+}
+.archive-row:last-child{border:0}
+.notice{
+  padding:15px;border-left:4px solid var(--coffee);
+  background:#F0E5D8;border-radius:5px
+}
+footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var(--muted);font-size:13px}
+@media(max-width:800px){
+  .layout{display:block}
+  .sidebar{position:relative;width:100%;padding:18px;height:auto}
+  .logo-sub{margin-bottom:12px}
+  .nav-title,.sidebar-note{display:none}
+  nav{display:flex;overflow-x:auto;gap:4px}
+  .nav-link{white-space:nowrap}
+  main{margin:0;width:100%;padding:22px 17px}
+  .hero{padding:27px}
+  .hero-mark{font-size:60px}
+}
+@media(max-width:520px){
+  .grid{grid-template-columns:1fr}
+  .hero-mark{display:none}
+  .hero{padding:24px}
+  .topbar{align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="logo">NUTRILOCK.</div>
+  <div class="logo-sub">YOUR PERSONAL HEALTH ARCHIVE</div>
+  <nav aria-label="Main navigation">
+    <div class="nav-title">YOUR SPACE</div>
+    <a class="nav-link active" href="#home">⌂ &nbsp; Overview</a>
+    <a class="nav-link" href="#archive">▤ &nbsp; Health Archive</a>
+    <a class="nav-link" href="#reports">▧ &nbsp; My Reports</a>
+    <a class="nav-link" href="#nutrition">◈ &nbsp; Nutrition</a>
+    <a class="nav-link" href="#timeline">◷ &nbsp; Health Timeline</a>
+    <div class="nav-title">CONNECTED SERVICES</div>
+    <a class="nav-link" href="#qr">▦ &nbsp; QR Connect</a>
+    <a class="nav-link" href="#vending">▣ &nbsp; Smart Vending</a>
+    <div class="nav-title">ACCOUNT</div>
+    <a class="nav-link" href="#family">♧ &nbsp; Family Access</a>
+    <a class="nav-link" href="#accessibility">⚙ &nbsp; Accessibility</a>
+  </nav>
+  <div class="sidebar-note">Your health information deserves a safe and organised home.</div>
+</aside>
+
+<main>
+<header class="topbar">
+  <div><strong>NUTRILOCK</strong><br><small>A thoughtful approach to personal health.</small></div>
+  <div class="guest">♡ &nbsp; Guest User</div>
+</header>
+
+<section id="home" class="hero">
+  <div>
+    <div class="eyebrow">WELCOME TO NUTRILOCK</div>
+    <h1>Your health.<br>Your history.<br>Your archive.</h1>
+    <p>A simple, organised space to understand your health, maintain your records and explore nutrition.</p>
+    <a class="btn" href="#archive">Explore your archive →</a>
+  </div>
+  <div class="hero-mark" aria-hidden="true">✳</div>
+</section>
+
+<section class="section">
+  <div class="tag">YOUR PERSONAL SPACE</div>
+  <h2>Everything in its place.</h2>
+  <p class="intro">Your personal health information, thoughtfully organised in one accessible platform.</p>
+  <div class="grid">
+    <article class="card featured">
+      <div class="card-icon">▤</div>
+      <h3>Health Archive</h3>
+      <p>Keep your medical history and personal health records organised.</p>
+      <a href="#archive">Explore archive →</a>
+    </article>
+    <article class="card">
+      <div class="card-icon">▧</div>
+      <h3>Report Intelligence</h3>
+      <p>Access your reports and understand medical terminology.</p>
+      <a href="#reports">Explore reports →</a>
+    </article>
+    <article class="card">
+      <div class="card-icon">◈</div>
+      <h3>Nutrition Intelligence</h3>
+      <p>Discover nutritional information and understand food labels.</p>
+      <a href="#nutrition">Explore nutrition →</a>
+    </article>
+    <article class="card dark-card">
+      <div class="card-icon">◷</div>
+      <h3>Your Health Timeline</h3>
+      <p>See your health information organised over time.</p>
+      <a href="#timeline">View timeline →</a>
+    </article>
+  </div>
+</section>
+
+<section id="archive" class="section">
+  <div class="tag">01 / PERSONAL RECORDS</div>
+  <h2>Your Health Archive</h2>
+  <p class="intro">A central place for your health documents, medical history and important personal records.</p>
+  <div class="archive">
+    <h3>Your archive categories</h3>
+    <div class="archive-row"><span>Medical Reports</span><span>→</span></div>
+    <div class="archive-row"><span>Medical History</span><span>→</span></div>
+    <div class="archive-row"><span>Allergies & Preferences</span><span>→</span></div>
+    <div class="archive-row"><span>Medication Records</span><span>→</span></div>
+  </div>
+</section>
+
+<section id="reports" class="section">
+  <div class="tag">02 / DOCUMENT INTELLIGENCE</div>
+  <h2>My Reports</h2>
+  <p class="intro">A future-ready space for uploading, organising and understanding supported medical documents.</p>
+  <div class="card">
+    <div class="card-icon">▧</div>
+    <h3>Report Centre</h3>
+    <p>Report uploading and analysis will be connected after secure account and storage setup.</p>
+    <span class="tag">DEVELOPMENT STAGE</span>
+  </div>
+</section>
+
+<section id="nutrition" class="section">
+  <div class="tag">03 / FOOD & WELLNESS</div>
+  <h2>Nutrition Intelligence</h2>
+  <p class="intro">Explore food information and learn how to understand nutrition labels.</p>
+  <div class="grid">
+    <div class="card"><h3>Food Library</h3><p>A searchable nutrition information collection.</p></div>
+    <div class="card"><h3>Label Guide</h3><p>Understand ingredients and nutritional terms.</p></div>
+  </div>
+</section>
+
+<section id="timeline" class="section">
+  <div class="tag">04 / YOUR HISTORY</div>
+  <h2>Health Timeline</h2>
+  <div class="card"><h3>Your records, over time.</h3><p>Future entries will appear chronologically as you add records to your archive.</p></div>
+</section>
+
+<section id="qr" class="section">
+  <div class="tag">05 / CONNECTED ACCESS</div>
+  <h2>QR Connect</h2>
+  <div class="card"><div class="card-icon">▦</div><h3>Your NutriLock QR</h3><p>Secure QR identity and scanning will be enabled after account integration.</p></div>
+</section>
+
+<section id="vending" class="section">
+  <div class="tag">06 / SMART TECHNOLOGY</div>
+  <h2>Smart Vending</h2>
+  <div class="card"><div class="card-icon">▣</div><h3>Connected Nutrition</h3><p>Browse product information and connect to the physical vending system when the hardware is installed.</p></div>
+</section>
+
+<section id="family" class="section">
+  <div class="tag">07 / SHARED CARE</div>
+  <h2>Family Access</h2>
+  <div class="card"><h3>Care with permission.</h3><p>Authorised family members and caregivers will be able to access records shared by the account holder.</p></div>
+</section>
+
+<section id="accessibility" class="section">
+  <div class="tag">08 / COMFORT & ACCESS</div>
+  <h2>Accessibility</h2>
+  <div class="card">
+    <h3>Make NutriLock comfortable to use.</h3>
+    <p>Choose a larger text size for easier reading.</p>
+    <button class="btn" id="textSize" type="button">Increase text size</button>
+  </div>
+</section>
+
+<div class="notice">
+  <strong>Important health information:</strong>
+  NutriLock is designed to organise and explain health information. It does not replace a qualified healthcare professional or provide a medical diagnosis.
+</div>
+
+<footer>
+  <strong>NUTRILOCK.</strong><br>
+  Your health. Your history. Your archive.<br>
+  A personal health organisation platform.
+</footer>
+</main>
+</div>
+
+<script>
+document.getElementById("textSize").addEventListener("click",function(){
+  const current=parseFloat(getComputedStyle(document.body).fontSize);
+  document.body.style.fontSize=(current>=20?16:current+2)+"px";
+  this.textContent=current>=20?"Increase text size":"Reset text size";
+});
+
+document.querySelectorAll(".nav-link").forEach(link=>{
+  link.addEventListener("click",()=>{
+    document.querySelectorAll(".nav-link").forEach(item=>item.classList.remove("active"));
+    link.classList.add("active");
+  });
+});
+</script>
+</body>
+</html>
