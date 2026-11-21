@@ -293,9 +293,101 @@ document.querySelectorAll(".nav-link").forEach(link=>{
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
+// NutriLock Authentication
 
+async function nutriSignUp() {
+  const name = document.getElementById("auth-name").value.trim();
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const message = document.getElementById("auth-message");
+
+  if (!name || !email || !password) {
+    message.textContent = "Please fill in all fields.";
+    return;
+  }
+
+  const { data, error } = await nutrilockDB.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      data: { full_name: name }
+    }
+  });
+
+  if (error) {
+    message.textContent = error.message;
+    return;
+  }
+
+  message.textContent = data.session
+    ? "Account created successfully!"
+    : "Account created! Please check your email to confirm.";
+}
+
+async function nutriSignIn() {
+  const email = document.getElementById("auth-email").value.trim();
+  const password = document.getElementById("auth-password").value;
+  const message = document.getElementById("auth-message");
+
+  if (!email || !password) {
+    message.textContent = "Enter your email and password.";
+    return;
+  }
+
+  const { error } = await nutrilockDB.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  if (error) {
+    message.textContent = error.message;
+    return;
+  }
+
+  message.textContent = "Signed in successfully!";
+}
+
+async function nutriSignOut() {
+  const message = document.getElementById("auth-message");
+
+  const { error } = await nutrilockDB.auth.signOut();
+
+  message.textContent = error
+    ? error.message
+    : "You have been signed out.";
+}
   console.log("NutriLock Supabase connected!");
 </script>
+<!-- NutriLock Authentication Panel -->
+<section id="auth-panel" style="max-width:420px;margin:40px auto;padding:28px;background:#F5EDE1;border:1px solid #D9C5A9;border-radius:18px;color:#49382F;font-family:Arial,sans-serif;">
+  <h2 style="margin-top:0;">Your Health Archive</h2>
+  <p>Sign in or create your personal NutriLock account.</p>
 
+  <input id="auth-name" type="text" placeholder="Full name (for signup)"
+    style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #D9C5A9;border-radius:8px;">
+
+  <input id="auth-email" type="email" placeholder="Email address"
+    style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #D9C5A9;border-radius:8px;">
+
+  <input id="auth-password" type="password" placeholder="Password"
+    style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;border:1px solid #D9C5A9;border-radius:8px;">
+
+  <button onclick="nutriSignUp()"
+    style="width:100%;padding:12px;margin-top:8px;background:#49382F;color:white;border:none;border-radius:8px;">
+    Create Account
+  </button>
+
+  <button onclick="nutriSignIn()"
+    style="width:100%;padding:12px;margin-top:10px;background:#96745B;color:white;border:none;border-radius:8px;">
+    Sign In
+  </button>
+
+  <button onclick="nutriSignOut()"
+    style="width:100%;padding:12px;margin-top:10px;background:transparent;color:#49382F;border:1px solid #96745B;border-radius:8px;">
+    Sign Out
+  </button>
+
+  <p id="auth-message" style="margin-top:15px;font-size:14px;"></p>
+</section>
 </body>
 </html>
