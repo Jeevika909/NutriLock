@@ -246,467 +246,452 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
 </section>
 
 <!-- ================= HEALTH ARCHIVE ================= -->
-<section id="health-archive" class="ha-section">
-
-  <style>
-    #health-archive {
-      --ha-bg: #f7f3ed;
-      --ha-card: #fffdf9;
-      --ha-ink: #49382f;
-      --ha-muted: #89796c;
-      --ha-line: #e5d9cc;
-      --ha-accent: #765b49;
-      background: var(--ha-bg);
-      color: var(--ha-ink);
-      padding: 28px 18px;
-      border-radius: 20px;
-      font-family: inherit;
-    }
-
-    #health-archive * {
-      box-sizing: border-box;
-    }
-
-    #health-archive .ha-wrap {
-      max-width: 950px;
-      margin: auto;
-    }
-
-    #health-archive .ha-eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      font-size: 10px;
-      color: var(--ha-muted);
-      margin-bottom: 12px;
-    }
-
-    #health-archive h2 {
-      font-family: Georgia, serif;
-      font-weight: 400;
-      font-size: clamp(28px, 5vw, 42px);
-      margin: 0 0 8px;
-      color: var(--ha-ink);
-    }
-
-    #health-archive .ha-subtitle {
-      color: var(--ha-muted);
-      font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 26px;
-    }
-
-    #health-archive .ha-panel {
-      background: var(--ha-card);
-      border: 1px solid var(--ha-line);
-      border-radius: 17px;
-      padding: 20px;
-      margin-bottom: 22px;
-    }
-
-    #health-archive .ha-panel-title {
-      font-family: Georgia, serif;
-      font-size: 22px;
-      font-weight: 400;
-      margin: 0 0 18px;
-    }
-
-    #health-archive .ha-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    #health-archive .ha-field {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      min-width: 0;
-    }
-
-    #health-archive .ha-full {
-      grid-column: 1 / -1;
-    }
-
-    #health-archive label {
-      font-size: 12px;
-      color: var(--ha-muted);
-    }
-
-    #health-archive input,
-    #health-archive select,
-    #health-archive textarea {
-      width: 100%;
-      border: 1px solid var(--ha-line);
-      background: #fff;
-      border-radius: 10px;
-      padding: 12px;
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--ha-ink);
-      outline: none;
-    }
-
-    #health-archive input:focus,
-    #health-archive select:focus,
-    #health-archive textarea:focus {
-      border-color: var(--ha-accent);
-      box-shadow: 0 0 0 2px rgba(118, 91, 73, 0.10);
-    }
-
-    #health-archive textarea {
-      resize: vertical;
-      min-height: 95px;
-    }
-
-    #health-archive .ha-file-box {
-      border: 1px dashed #cbb9a8;
-      border-radius: 13px;
-      background: #faf7f2;
-      padding: 18px;
-      text-align: center;
-    }
-
-    #health-archive .ha-file-box input {
-      border: none;
-      padding: 10px 0 0;
-      background: transparent;
-    }
-
-    #health-archive .ha-file-note {
-      font-size: 11px;
-      color: var(--ha-muted);
-      line-height: 1.6;
-      margin-top: 7px;
-    }
-
-    #health-archive .ha-preview {
-      margin-top: 12px;
-      display: none;
-      padding: 12px;
-      background: #f3eee7;
-      border-radius: 12px;
-      text-align: left;
-      overflow-wrap: anywhere;
-    }
-
-    #health-archive .ha-preview img {
-      display: block;
-      max-width: 100%;
-      max-height: 300px;
-      object-fit: contain;
-      margin: 12px auto 0;
-      border-radius: 8px;
-    }
-
-    #health-archive .ha-preview iframe {
-      width: 100%;
-      height: 350px;
-      margin-top: 12px;
-      border: 1px solid var(--ha-line);
-      border-radius: 8px;
-      background: white;
-    }
-
-    #health-archive .ha-btn {
-      border: 1px solid var(--ha-accent);
-      background: var(--ha-accent);
-      color: white;
-      padding: 12px 17px;
-      border-radius: 10px;
-      font-family: inherit;
-      font-size: 13px;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    #health-archive .ha-btn:hover {
-      opacity: 0.86;
-    }
-
-    #health-archive .ha-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    #health-archive .ha-btn-outline {
-      background: transparent;
-      color: var(--ha-ink);
-      border-color: var(--ha-line);
-    }
-
-    #health-archive .ha-btn-danger {
-      background: transparent;
-      color: #9a5148;
-      border-color: #dfc6c0;
-    }
-
-    #health-archive .ha-message {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    #health-archive .ha-message-error {
-      display: block;
-      color: #8c3e36;
-      background: #f8eae6;
-    }
-
-    #health-archive .ha-message-success {
-      display: block;
-      color: #536a4a;
-      background: #edf2e8;
-    }
-
-    #health-archive .ha-toolbar {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-
-    #health-archive .ha-toolbar input {
-      flex: 1;
-      min-width: 160px;
-    }
-
-    #health-archive .ha-toolbar select {
-      width: auto;
-      min-width: 150px;
-    }
-
-    #health-archive .ha-count {
-      color: var(--ha-muted);
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
-
-    #health-archive .ha-empty {
-      text-align: center;
-      color: var(--ha-muted);
-      padding: 30px 12px;
-      border: 1px dashed var(--ha-line);
-      border-radius: 13px;
-      line-height: 1.7;
-      font-size: 13px;
-    }
-
-    #health-archive .ha-report {
-      background: #fff;
-      border: 1px solid var(--ha-line);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
-
-    #health-archive .ha-report-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
-    #health-archive .ha-report-name {
-      font-family: Georgia, serif;
-      font-size: 19px;
-      line-height: 1.4;
-      overflow-wrap: anywhere;
-    }
-
-    #health-archive .ha-report-meta {
-      color: var(--ha-muted);
-      font-size: 11px;
-      line-height: 1.7;
-      margin-top: 5px;
-    }
-
-    #health-archive .ha-tag {
-      display: inline-block;
-      background: #f2ebe3;
-      color: #735b48;
-      padding: 5px 9px;
-      border-radius: 30px;
-      font-size: 10px;
-      white-space: nowrap;
-    }
-
-    #health-archive .ha-report-notes {
-      font-size: 13px;
-      color: #726357;
-      line-height: 1.6;
-      margin-top: 12px;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    #health-archive .ha-report-actions {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    #health-archive .ha-report-actions .ha-btn {
-      padding: 9px 12px;
-      font-size: 12px;
-    }
-
-    #health-archive .ha-storage-warning {
-      color: var(--ha-muted);
-      font-size: 11px;
-      line-height: 1.6;
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid var(--ha-line);
-    }
-
-    @media (max-width: 600px) {
-      #health-archive {
-        padding: 22px 12px;
-      }
-
-      #health-archive .ha-panel {
-        padding: 15px;
-      }
-
-      #health-archive .ha-grid {
-        grid-template-columns: 1fr;
-      }
-
-      #health-archive .ha-full {
-        grid-column: auto;
-      }
-
-      #health-archive .ha-toolbar {
-        flex-direction: column;
-      }
-
-      #health-archive .ha-toolbar select {
-        width: 100%;
-      }
-
-      #health-archive .ha-report-top {
-        flex-direction: column;
-      }
-    }
-  </style>
-
-  <div class="ha-wrap">
-
-    <div class="ha-eyebrow">NutriLock · Personal Records</div>
-
-    <h2>Health Archive</h2>
-
-    <div class="ha-subtitle">
-      A private place to organise your health documents
-      and keep your records together.
-    </div>
-
-    <!-- ADD REPORT -->
-    <div class="ha-panel">
-
-      <h3 class="ha-panel-title">Add a record</h3>
-
-      <form id="ha-form">
-
-        <div class="ha-grid">
-
-          <div class="ha-field">
-            <label for="ha-title">Report title</label>
-            <input
-              id="ha-title"
-              type="text"
-              placeholder="e.g. Blood Test"
-              maxlength="100"
-              required
-            >
-          </div>
-
-          <div class="ha-field">
-            <label for="ha-category">Category</label>
-            <select id="ha-category" required>
-              <option value="">Choose category</option>
-              <option value="Blood Test">Blood Test</option>
-              <option value="Imaging">Imaging / Scan</option>
-              <option value="Prescription">Prescription</option>
-              <option value="Consultation">Consultation</option>
-              <option value="Vaccination">Vaccination</option>
-              <option value="General">General Record</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div class="ha-field">
-            <label for="ha-date">Record date</label>
-            <input
-              id="ha-date"
-              type="date"
-              required
-            >
-          </div>
-
-          <div class="ha-field ha-full">
-            <label for="ha-notes">Notes (optional)</label>
-            <textarea
-              id="ha-notes"
-              maxlength="1000"
-              placeholder="Add a description for this record..."
-            ></textarea>
-          </div>
-
-          <div class="ha-field ha-full">
-
-            <label for="ha-file">Report file</label>
-
-            <div class="ha-file-box">
-
-              <input
-                id="ha-file"
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
-                required
-              >
-
-              <div class="ha-file-note">
-                PDF or image files · Maximum 10 MB per file
-              </div>
-
-              <div
-                id="ha-preview"
-                class="ha-preview"
-              ></div>
-
-            </div>
-          </div>
-
-          <div class="ha-field ha-full">
-
-            <button
-              id="ha-submit"
-              type="submit"
-              class="ha-btn"
-            >
-              Add to Health Archive
-            </button>
-
-          </div>
-
+<section id="healthcare">
+<style>
+#healthcare {
+  --cream:#f7f2eb; --card:#fffdf9; --brown:#604a3a;
+  --muted:#927f6e; --line:#e6d9cb; --accent:#82664e;
+  color:var(--brown); background:var(--cream);
+  padding:24px 15px; border-radius:20px; font-family:inherit;
+}
+#healthcare * {box-sizing:border-box}
+#healthcare .arc-wrap {max-width:950px;margin:auto}
+#healthcare h2 {font:normal 36px Georgia,serif;margin:8px 0}
+#healthcare h3 {font:normal 22px Georgia,serif;margin:0 0 16px}
+#healthcare .arc-small {font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase}
+#healthcare .arc-sub {font-size:14px;line-height:1.7;color:var(--muted);margin-bottom:22px}
+#healthcare .arc-card {background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin:0 0 20px}
+#healthcare .arc-grid {display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#healthcare .arc-field {display:flex;flex-direction:column;gap:7px}
+#healthcare .arc-wide {grid-column:1/-1}
+#healthcare label {font-size:12px;color:var(--muted)}
+#healthcare input,#healthcare select,#healthcare textarea {
+  width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;
+  background:white;color:var(--brown);font:inherit;outline:none;
+}
+#healthcare textarea {min-height:85px;resize:vertical}
+#healthcare input:focus,#healthcare select:focus,#healthcare textarea:focus {
+  border-color:var(--accent)
+}
+#healthcare .arc-upload {
+  border:1px dashed #cbb9a7;background:#faf6f0;padding:16px;border-radius:12px
+}
+#healthcare .arc-help {font-size:11px;color:var(--muted);line-height:1.6;margin-top:8px}
+#healthcare .arc-preview {display:none;margin-top:12px;padding:12px;background:#f3ece4;border-radius:10px;overflow-wrap:anywhere}
+#healthcare .arc-preview img {max-width:100%;max-height:260px;display:block;margin:12px auto}
+#healthcare .arc-preview iframe {width:100%;height:300px;border:0;margin-top:10px;background:white}
+#healthcare .arc-btn {
+  background:var(--accent);color:white;border:1px solid var(--accent);
+  border-radius:10px;padding:11px 15px;cursor:pointer;font:inherit;font-size:13px
+}
+#healthcare .arc-btn:hover {opacity:.88}
+#healthcare .arc-secondary {background:white;color:var(--brown);border-color:var(--line)}
+#healthcare .arc-delete {background:white;color:#92564c;border-color:#dfc8c0}
+#healthcare .arc-message {font-size:13px;line-height:1.6;margin-top:12px}
+#healthcare .arc-toolbar {display:flex;gap:10px;margin-bottom:12px}
+#healthcare .arc-toolbar input {flex:1;min-width:0}
+#healthcare .arc-count {font-size:12px;color:var(--muted);margin:10px 0}
+#healthcare .arc-empty {text-align:center;border:1px dashed var(--line);border-radius:12px;padding:25px;color:var(--muted);font-size:13px;line-height:1.7}
+#healthcare .arc-record {border:1px solid var(--line);border-radius:13px;padding:15px;margin-bottom:12px;background:white}
+#healthcare .arc-record-head {display:flex;justify-content:space-between;gap:12px}
+#healthcare .arc-record-title {font:normal 20px Georgia,serif;overflow-wrap:anywhere}
+#healthcare .arc-meta {font-size:11px;color:var(--muted);line-height:1.7;margin-top:5px}
+#healthcare .arc-tag {background:#f1e9e0;border-radius:20px;padding:5px 9px;font-size:10px;height:max-content}
+#healthcare .arc-notes {font-size:13px;line-height:1.6;margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+#healthcare .arc-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:13px}
+#healthcare .arc-actions .arc-btn {padding:8px 12px;font-size:12px}
+#healthcare .arc-privacy {font-size:11px;color:var(--muted);line-height:1.7;margin-top:16px}
+@media(max-width:600px){
+  #healthcare .arc-grid{grid-template-columns:1fr}
+  #healthcare .arc-wide{grid-column:auto}
+  #healthcare .arc-toolbar{flex-direction:column}
+  #healthcare .arc-record-head{flex-direction:column}
+}
+</style>
+
+<div class="arc-wrap">
+  <div class="arc-small">NutriLock · Personal Records</div>
+  <h2>Health Archive</h2>
+  <div class="arc-sub">Keep your documents organised in one place.</div>
+
+  <div class="arc-card">
+    <h3>Add a record</h3>
+    <form id="arc-form">
+      <div class="arc-grid">
+        <div class="arc-field">
+          <label for="arc-title">Record title</label>
+          <input id="arc-title" maxlength="100" placeholder="e.g. Blood Test Report" required>
         </div>
+        <div class="arc-field">
+          <label for="arc-category">Category</label>
+          <select id="arc-category" required>
+            <option value="">Select category</option>
+            <option>Blood Test</option>
+            <option>Imaging / Scan</option>
+            <option>Prescription</option>
+            <option>Consultation</option>
+            <option>Vaccination</option>
+            <option>General Record</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="arc-field">
+          <label for="arc-date">Record date</label>
+          <input id="arc-date" type="date" required>
+        </div>
+        <div class="arc-field arc-wide">
+          <label for="arc-notes">Notes (optional)</label>
+          <textarea id="arc-notes" maxlength="1000" placeholder="Add a short description..."></textarea>
+        </div>
+        <div class="arc-field arc-wide">
+          <label for="arc-file">Select document</label>
+          <div class="arc-upload">
+            <input id="arc-file" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" required>
+            <div class="arc-help">PDF, PNG or JPG · Up to 10 MB per file</div>
+            <div id="arc-preview" class="arc-preview"></div>
+          </div>
+        </div>
+        <div class="arc-field arc-wide">
+          <button class="arc-btn" id="arc-save" type="submit">Save to Health Archive</button>
+        </div>
+      </div>
+    </form>
+    <div id="arc-message" class="arc-message" role="status" aria-live="polite"></div>
+  </div>
 
-        <div
-          id="ha-message"
-          class="ha-message"
-          role="status"
-          aria-live="polite"
-        ></div>
-
-      </form>
-
+  <div class="arc-card">
+    <h3>Your records</h3>
+    <div class="arc-toolbar">
+      <input id="arc-search" type="search" placeholder="Search your records..." aria-label="Search records">
+      <select id="arc-filter" aria-label="Filter by category">
+        <option value="">All categories</option>
+        <option>Blood Test</option>
+        <option>Imaging / Scan</option>
+        <option>Prescription</option>
+        <option>Consultation</option>
+        <option>Vaccination</option>
+        <option>General Record</option>
+        <option>Other</option>
+      </select>
     </div>
+    <div id="arc-count" class="arc-count">Loading records...</div>
+    <div id="arc-list"></div>
+    <div class="arc-privacy">
+      Stored in this browser's IndexedDB. This is not encrypted medical
+      storage or a secure cloud backup. Records are not synced between
+      devices. Clearing browser data may erase your records.
+    </div>
+  </div>
+</div>
 
+<script>
+(function(){
+  const root = document.getElementById("healthcare");
+  if(!root || root.dataset.arcReady) return;
+  root.dataset.arcReady = "1";
+
+  const $ = id => root.querySelector("#" + id);
+  const form = $("arc-form"), fileInput = $("arc-file"),
+        preview = $("arc-preview"), msg = $("arc-message"),
+        list = $("arc-list"), count = $("arc-count"),
+        search = $("arc-search"), filter = $("arc-filter");
+
+  const DB_NAME = "NutriLockHealthArchive";
+  const STORE = "records";
+  const MAX_SIZE = 10 * 1024 * 1024;
+  let db, selectedFile = null, previewURL = null;
+
+  const now = new Date();
+  $("arc-date").value =
+    `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+
+  function status(text, type="info"){
+    msg.textContent = text;
+    msg.style.color = type === "error" ? "#984c43" :
+                     type === "success" ? "#526b4d" : "#927f6e";
+  }
+
+  function openDB(){
+    return new Promise((resolve,reject)=>{
+      const request = indexedDB.open(DB_NAME,1);
+      request.onupgradeneeded = e => {
+        const database = e.target.result;
+        if(!database.objectStoreNames.contains(STORE)){
+          database.createObjectStore(STORE,{keyPath:"id"});
+        }
+      };
+      request.onsuccess = e => resolve(e.target.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function transaction(mode="readonly"){
+    return db.transaction(STORE,mode).objectStore(STORE);
+  }
+
+  function getAll(){
+    return new Promise((resolve,reject)=>{
+      const request = transaction().getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function putRecord(record){
+    return new Promise((resolve,reject)=>{
+      const request = transaction("readwrite").put(record);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function removeRecord(id){
+    return new Promise((resolve,reject)=>{
+      const request = transaction("readwrite").delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function fileType(file){
+    const n = file.name.toLowerCase();
+    if(file.type === "application/pdf" || n.endsWith(".pdf")) return "pdf";
+    if(file.type === "image/png" || n.endsWith(".png")) return "png";
+    if(file.type === "image/jpeg" || n.endsWith(".jpg") || n.endsWith(".jpeg")) return "jpg";
+    return "";
+  }
+
+  function sizeText(bytes){
+    return bytes < 1024*1024
+      ? (bytes/1024).toFixed(1)+" KB"
+      : (bytes/(1024*1024)).toFixed(2)+" MB";
+  }
+
+  function dateText(value){
+    if(!value) return "";
+    const [y,m,d] = value.split("-").map(Number);
+    return new Date(y,m-1,d).toLocaleDateString(undefined,{
+      day:"numeric",month:"short",year:"numeric"
+    });
+  }
+
+  function cleanPreview(){
+    if(previewURL){ URL.revokeObjectURL(previewURL); previewURL=null; }
+    preview.replaceChildren();
+    preview.style.display="none";
+  }
+
+  function showPreview(file){
+    cleanPreview();
+    if(!file) return;
+    previewURL=URL.createObjectURL(file);
+    preview.style.display="block";
+
+    const info=document.createElement("div");
+    info.textContent=`Selected: ${file.name} · ${sizeText(file.size)}`;
+    preview.appendChild(info);
+
+    if(fileType(file)==="pdf"){
+      const iframe=document.createElement("iframe");
+      iframe.title="PDF preview";
+      iframe.src=previewURL;
+      preview.appendChild(iframe);
+    } else {
+      const img=document.createElement("img");
+      img.alt="Selected document preview";
+      img.src=previewURL;
+      preview.appendChild(img);
+    }
+  }
+
+  function makeButton(text,extra,callback){
+    const b=document.createElement("button");
+    b.type="button";
+    b.className="arc-btn "+(extra||"");
+    b.textContent=text;
+    b.addEventListener("click",callback);
+    return b;
+  }
+
+  async function render(){
+    try{
+      const all=await getAll();
+      const q=search.value.trim().toLowerCase();
+      const category=filter.value;
+
+      const records=all.filter(r=>{
+        const matchesCategory=!category||r.category===category;
+        const haystack=[r.title,r.category,r.notes,r.fileName].join(" ").toLowerCase();
+        return matchesCategory && haystack.includes(q);
+      }).sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+
+      count.textContent=`${records.length} ${records.length===1?"record":"records"}`;
+      list.replaceChildren();
+
+      if(!records.length){
+        const empty=document.createElement("div");
+        empty.className="arc-empty";
+        empty.textContent=all.length
+          ? "No records match your search."
+          : "Your archive is empty. Add your first record above.";
+        list.appendChild(empty);
+        return;
+      }
+
+      records.forEach(record=>{
+        const card=document.createElement("article");
+        card.className="arc-record";
+
+        const head=document.createElement("div");
+        head.className="arc-record-head";
+
+        const details=document.createElement("div");
+        const title=document.createElement("div");
+        title.className="arc-record-title";
+        title.textContent=record.title;
+
+        const meta=document.createElement("div");
+        meta.className="arc-meta";
+        meta.textContent=`${dateText(record.date)} · ${record.fileName} · ${sizeText(record.fileSize)}`;
+        details.append(title,meta);
+
+        const tag=document.createElement("span");
+        tag.className="arc-tag";
+        tag.textContent=record.category;
+        head.append(details,tag);
+        card.appendChild(head);
+
+        if(record.notes){
+          const notes=document.createElement("div");
+          notes.className="arc-notes";
+          notes.textContent=record.notes;
+          card.appendChild(notes);
+        }
+
+        const actions=document.createElement("div");
+        actions.className="arc-actions";
+
+        actions.appendChild(makeButton("View","",()=>{
+          const blob=new Blob([record.fileBlob],{type:record.fileType});
+          const url=URL.createObjectURL(blob);
+          const opened=window.open(url,"_blank");
+          if(!opened) status("Popup blocked. Please allow popups to view the document.","error");
+          setTimeout(()=>URL.revokeObjectURL(url),60000);
+        }));
+
+        actions.appendChild(makeButton("Download","arc-secondary",()=>{
+          const blob=new Blob([record.fileBlob],{type:record.fileType});
+          const url=URL.createObjectURL(blob);
+          const a=document.createElement("a");
+          a.href=url;
+          a.download=record.fileName;
+          a.click();
+          setTimeout(()=>URL.revokeObjectURL(url),10000);
+        }));
+
+        actions.appendChild(makeButton("Delete","arc-delete",async()=>{
+          if(!confirm("Delete this record from this browser?")) return;
+          try{
+            await removeRecord(record.id);
+            status("Record deleted.","success");
+            await render();
+          }catch(e){status("Could not delete this record.","error");}
+        }));
+
+        card.appendChild(actions);
+        list.appendChild(card);
+      });
+    }catch(e){
+      count.textContent="Unable to load records";
+      list.textContent="Storage error. Try reloading the page.";
+      status("Could not read archive storage. "+(e.message||""),"error");
+    }
+  }
+
+  fileInput.addEventListener("change",()=>{
+    status("");
+    cleanPreview();
+    selectedFile=null;
+    const f=fileInput.files?.[0];
+    if(!f) return;
+
+    if(!fileType(f)){
+      fileInput.value="";
+      status("Choose a PDF, JPG, or PNG file.","error");
+      return;
+    }
+    if(f.size>MAX_SIZE){
+      fileInput.value="";
+      status("File exceeds the 10 MB limit.","error");
+      return;
+    }
+    if(f.size===0){
+      fileInput.value="";
+      status("This file is empty.","error");
+      return;
+    }
+    selectedFile=f;
+    showPreview(f);
+  });
+
+  form.addEventListener("submit",async e=>{
+    e.preventDefault();
+    status("");
+
+    if(!selectedFile){status("Please select a document.","error");return;}
+
+    const record={
+      id:crypto.randomUUID ? crypto.randomUUID() : Date.now().toString()+Math.random().toString(36),
+      title:$("arc-title").value.trim(),
+      category:$("arc-category").value,
+      date:$("arc-date").value,
+      notes:$("arc-notes").value.trim(),
+      fileName:selectedFile.name,
+      fileType:selectedFile.type || (fileType(selectedFile)==="pdf"?"application/pdf":fileType(selectedFile)==="png"?"image/png":"image/jpeg"),
+      fileSize:selectedFile.size,
+      fileBlob:selectedFile
+    };
+
+    if(!record.title||!record.category||!record.date){
+      status("Please complete the title, category, and date.","error");
+      return;
+    }
+
+    $("arc-save").disabled=true;
+    $("arc-save").textContent="Saving...";
+
+    try{
+      await putRecord(record);
+      form.reset();
+      const d=new Date();
+      $("arc-date").value=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+      selectedFile=null;
+      cleanPreview();
+      status("Record saved successfully.","success");
+      await render();
+    }catch(error){
+      status("Could not save the record. Your browser storage may be full.","error");
+    }finally{
+      $("arc-save").disabled=false;
+      $("arc-save").textContent="Save to Health Archive";
+    }
+  });
+
+  search.addEventListener("input",render);
+  filter.addEventListener("change",render);
+
+  openDB().then(database=>{
+    db=database;
+    render();
+  }).catch(error=>{
+    count.textContent="Storage unavailable";
+    status("Your browser could not open local storage. Please try another browser or device.","error");
+  });
+
+})();
+</script>
+</section>
+<!-- =============== END HEALTH ARCHIVE =============== -->
     <!-- REPORT HISTORY -->
     <div class="ha-panel">
 
