@@ -676,14 +676,514 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
   </script>
 </section>
 
-<section id="nutrition" class="section">
-  <div class="tag">03 / FOOD & WELLNESS</div>
-  <h2>Nutrition Intelligence</h2>
-  <p class="intro">Explore food information and learn how to understand nutrition labels.</p>
-  <div class="grid">
-    <div class="card"><h3>Food Library</h3><p>A searchable nutrition information collection.</p></div>
-    <div class="card"><h3>Label Guide</h3><p>Understand ingredients and nutritional terms.</p></div>
+<section id="nutrition">
+  <style>
+    #nutrition {
+      --ni-bg: #f7f2e9;
+      --ni-card: #fffdf9;
+      --ni-ink: #49382f;
+      --ni-muted: #88776b;
+      --ni-line: #e7ddd0;
+      --ni-accent: #b49a80;
+      background: var(--ni-bg);
+      color: var(--ni-ink);
+      padding: 24px;
+      border-radius: 18px;
+      font-family: inherit;
+    }
+    #nutrition * { box-sizing: border-box; }
+    #nutrition h2, #nutrition h3 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+    }
+    #nutrition h2 { font-size: 30px; margin: 0 0 8px; }
+    #nutrition h3 { font-size: 20px; margin: 0 0 12px; }
+    #nutrition p { line-height: 1.6; }
+    .ni-muted { color: var(--ni-muted); font-size: 13px; }
+    .ni-card {
+      background: var(--ni-card);
+      border: 1px solid var(--ni-line);
+      border-radius: 15px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .ni-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    #nutrition input, #nutrition select, #nutrition textarea,
+    #nutrition button {
+      font: inherit;
+    }
+    #nutrition input, #nutrition select, #nutrition textarea {
+      width: 100%;
+      border: 1px solid var(--ni-line);
+      background: white;
+      color: var(--ni-ink);
+      padding: 11px;
+      border-radius: 10px;
+      margin-top: 5px;
+    }
+    #nutrition textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+    #nutrition label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .ni-btn {
+      border: 0;
+      background: var(--ni-ink);
+      color: white;
+      padding: 11px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .ni-btn.secondary {
+      background: transparent;
+      color: var(--ni-ink);
+      border: 1px solid var(--ni-line);
+    }
+    .ni-btn:hover { opacity: .86; }
+    .ni-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .ni-entry {
+      padding: 13px 0;
+      border-bottom: 1px solid var(--ni-line);
+    }
+    .ni-entry:last-child { border-bottom: 0; }
+    .ni-pill {
+      display: inline-block;
+      border: 1px solid var(--ni-line);
+      border-radius: 20px;
+      padding: 4px 9px;
+      font-size: 11px;
+      margin: 3px 4px 3px 0;
+    }
+    .ni-food-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .ni-food {
+      border: 1px solid var(--ni-line);
+      border-radius: 12px;
+      padding: 13px;
+      background: #faf6ef;
+    }
+    .ni-food strong { display: block; margin-bottom: 6px; }
+    .ni-empty {
+      color: var(--ni-muted);
+      padding: 14px 0;
+      font-size: 13px;
+    }
+    .ni-note {
+      background: #f2e9dd;
+      border-radius: 12px;
+      padding: 13px;
+      font-size: 13px;
+      line-height: 1.65;
+      margin-top: 12px;
+    }
+    @media(max-width:600px) {
+      #nutrition { padding: 15px; }
+      .ni-grid, .ni-food-grid { grid-template-columns: 1fr; }
+      #nutrition h2 { font-size: 25px; }
+    }
+  </style>
+
+  <header>
+    <p class="ni-muted">PERSONAL HEALTH · NUTRITION</p>
+    <h2>Nutrition Intelligence</h2>
+    <p class="ni-muted">
+      Explore food, build balanced meals, and keep your own food notes
+      in one calm space.
+    </p>
+  </header>
+
+  <!-- FOOD JOURNAL -->
+  <div class="ni-card">
+    <h3>Food journal</h3>
+    <p class="ni-muted">
+      A simple record of what you've eaten. No calorie counting
+      or food scoring.
+    </p>
+
+    <form id="ni-meal-form">
+      <div class="ni-grid">
+        <label>
+          Meal
+          <select id="ni-meal-type" required>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Lunch">Lunch</option>
+            <option value="Dinner">Dinner</option>
+            <option value="Snack">Snack</option>
+          </select>
+        </label>
+        <label>
+          Date
+          <input type="date" id="ni-meal-date" required>
+        </label>
+      </div>
+
+      <label>
+        What did you have?
+        <input id="ni-meal-food" placeholder="Food or meal name" required>
+      </label>
+
+      <label>
+        Notes (optional)
+        <textarea id="ni-meal-notes" placeholder="Taste, ingredients, or anything you'd like to remember..."></textarea>
+      </label>
+
+      <div class="ni-actions">
+        <button class="ni-btn" type="submit">Add to journal</button>
+        <button class="ni-btn secondary" type="reset">Clear</button>
+      </div>
+    </form>
   </div>
+
+  <!-- JOURNAL OVERVIEW -->
+  <div class="ni-card">
+    <h3>Your food journal</h3>
+    <div class="ni-grid">
+      <label>
+        Search meals
+        <input id="ni-search" placeholder="Search your entries">
+      </label>
+      <label>
+        Meal filter
+        <select id="ni-filter">
+          <option value="All">All meals</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Snack">Snack</option>
+        </select>
+      </label>
+    </div>
+    <div id="ni-journal-list"></div>
+    <div id="ni-journal-empty" class="ni-empty">
+      Your journal is empty. Add your first entry above.
+    </div>
+  </div>
+
+  <!-- FOOD EXPLORER -->
+  <div class="ni-card">
+    <h3>Food explorer</h3>
+    <p class="ni-muted">
+      Foods offer different combinations of nutrients. Eating a variety
+      of foods helps you get different things your body needs.
+    </p>
+
+    <div class="ni-food-grid">
+      <div class="ni-food">
+        <strong>🍚 Grains & cereals</strong>
+        Rice, oats, wheat, millets and bread provide energy and may
+        supply fibre and other nutrients.
+      </div>
+      <div class="ni-food">
+        <strong>🥜 Protein-rich foods</strong>
+        Beans, lentils, eggs, tofu, nuts, dairy and fish provide
+        protein for growth and everyday body functions.
+      </div>
+      <div class="ni-food">
+        <strong>🥬 Vegetables</strong>
+        Different vegetables provide fibre, vitamins, minerals
+        and other beneficial plant compounds.
+      </div>
+      <div class="ni-food">
+        <strong>🍊 Fruits</strong>
+        Fruits contain a variety of vitamins, water, fibre
+        and naturally occurring carbohydrates.
+      </div>
+      <div class="ni-food">
+        <strong>🥛 Dairy & alternatives</strong>
+        Milk, curd, paneer and suitable fortified alternatives can
+        provide calcium, protein and other nutrients.
+      </div>
+      <div class="ni-food">
+        <strong>🥑 Fats & oils</strong>
+        Nuts, seeds, oils and other fat-containing foods provide
+        energy and help the body absorb certain vitamins.
+      </div>
+    </div>
+  </div>
+
+  <!-- MEAL IDEAS -->
+  <div class="ni-card">
+    <h3>Meal inspiration</h3>
+    <p class="ni-muted">
+      Ideas to mix and match depending on what's available,
+      what you enjoy, and your usual meals.
+    </p>
+
+    <div class="ni-food-grid">
+      <div class="ni-food">
+        <strong>Breakfast</strong>
+        Idli with sambar · Oats with fruit · Eggs and toast · Poha
+      </div>
+      <div class="ni-food">
+        <strong>Lunch</strong>
+        Rice, dal and vegetables · Roti with paneer · Curd rice
+        with sides
+      </div>
+      <div class="ni-food">
+        <strong>Dinner</strong>
+        Khichdi with curd · Chapati with mixed vegetables ·
+        Rice with a favourite curry
+      </div>
+      <div class="ni-food">
+        <strong>Snack ideas</strong>
+        Fruit and nuts · Sandwich · Sundal · Yogurt ·
+        Homemade snack you enjoy
+      </div>
+    </div>
+
+    <div class="ni-note">
+      Meals don't have to be perfect or follow a rigid formula.
+      Your appetite, preferences, culture, schedule and access
+      to food all matter.
+    </div>
+  </div>
+
+  <!-- LABEL NOTES -->
+  <div class="ni-card">
+    <h3>Label reader notes</h3>
+    <p class="ni-muted">
+      Save ingredient and label details for a product you want to remember.
+      This is a manual notes tool, not an automated label scanner.
+    </p>
+
+    <form id="ni-label-form">
+      <label>
+        Product name
+        <input id="ni-label-name" placeholder="Name of product" required>
+      </label>
+      <label>
+        Ingredients
+        <textarea id="ni-label-ingredients" placeholder="Ingredients copied from the package"></textarea>
+      </label>
+      <label>
+        Allergens declared on label
+        <input id="ni-label-allergens" placeholder="Allergens stated on package">
+      </label>
+      <label>
+        Notes
+        <textarea id="ni-label-notes" placeholder="Questions, preferences, or other label information"></textarea>
+      </label>
+      <button class="ni-btn" type="submit">Save label notes</button>
+    </form>
+
+    <div id="ni-label-list"></div>
+    <div id="ni-label-empty" class="ni-empty">
+      No label notes saved yet.
+    </div>
+  </div>
+
+  <!-- PERSONAL NOTES -->
+  <div class="ni-card">
+    <h3>My nutrition notes</h3>
+    <p class="ni-muted">
+      Keep questions, favourite meals, recipe ideas or notes
+      you'd like to discuss with a trusted adult or health professional.
+    </p>
+    <form id="ni-notes-form">
+      <label>
+        Note
+        <textarea id="ni-note-text" placeholder="Write your note here..."></textarea>
+      </label>
+      <button class="ni-btn" type="submit">Save note</button>
+    </form>
+    <div id="ni-notes-list"></div>
+    <div id="ni-notes-empty" class="ni-empty">
+      No personal notes yet.
+    </div>
+  </div>
+
+  <div class="ni-note">
+    <strong>About Nutrition Intelligence</strong><br>
+    This space provides general food and nutrition information.
+    It doesn't prescribe diets, assess your body, diagnose deficiencies,
+    or replace advice from a registered healthcare professional.
+    Food needs vary with age, growth, health, activity, culture,
+    and individual circumstances.
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('nutrition');
+    if (!root || root.dataset.niReady === '1') return;
+    root.dataset.niReady = '1';
+
+    // Temporary browser memory only.
+    // This section does not connect to Supabase.
+    let meals = [];
+    let labels = [];
+    let notes = [];
+
+    const $ = id => root.querySelector('#' + id);
+
+    const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[ch]));
+
+    const today = new Date();
+    const localDate = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, '0'),
+      String(today.getDate()).padStart(2, '0')
+    ].join('-');
+
+    $('ni-meal-date').value = localDate;
+
+    function renderMeals() {
+      const query = $('ni-search').value.trim().toLowerCase();
+      const filter = $('ni-filter').value;
+
+      const filtered = meals.filter(meal => {
+        const matchesSearch =
+          meal.food.toLowerCase().includes(query) ||
+          meal.notes.toLowerCase().includes(query);
+
+        const matchesFilter = filter === 'All' || meal.type === filter;
+        return matchesSearch && matchesFilter;
+      }).sort((a, b) => b.date.localeCompare(a.date));
+
+      $('ni-journal-list').innerHTML = filtered.map(meal => `
+        <div class="ni-entry">
+          <span class="ni-pill">${escapeHTML(meal.type)}</span>
+          <strong>${escapeHTML(meal.food)}</strong>
+          <div class="ni-muted">${escapeHTML(meal.date)}</div>
+          ${meal.notes ? `<p>${escapeHTML(meal.notes)}</p>` : ''}
+          <button type="button" class="ni-btn secondary"
+            data-meal-delete="${meal.id}">Delete entry</button>
+        </div>
+      `).join('');
+
+      $('ni-journal-empty').style.display = filtered.length ? 'none' : 'block';
+      $('ni-journal-empty').textContent = meals.length
+        ? 'No entries match your search.'
+        : 'Your journal is empty. Add your first entry above.';
+    }
+
+    function renderLabels() {
+      $('ni-label-list').innerHTML = labels.map(label => `
+        <div class="ni-entry">
+          <strong>${escapeHTML(label.name)}</strong>
+          ${label.ingredients ? `<p><strong>Ingredients:</strong> ${escapeHTML(label.ingredients)}</p>` : ''}
+          ${label.allergens ? `<p><strong>Label allergens:</strong> ${escapeHTML(label.allergens)}</p>` : ''}
+          ${label.notes ? `<p><strong>Notes:</strong> ${escapeHTML(label.notes)}</p>` : ''}
+          <button type="button" class="ni-btn secondary"
+            data-label-delete="${label.id}">Delete</button>
+        </div>
+      `).join('');
+
+      $('ni-label-empty').style.display = labels.length ? 'none' : 'block';
+    }
+
+    function renderNotes() {
+      $('ni-notes-list').innerHTML = notes.map(note => `
+        <div class="ni-entry">
+          <p>${escapeHTML(note.text)}</p>
+          <div class="ni-muted">${escapeHTML(note.date)}</div>
+          <button type="button" class="ni-btn secondary"
+            data-note-delete="${note.id}">Delete</button>
+        </div>
+      `).join('');
+
+      $('ni-notes-empty').style.display = notes.length ? 'none' : 'block';
+    }
+
+    $('ni-meal-form').addEventListener('submit', event => {
+      event.preventDefault();
+
+      const food = $('ni-meal-food').value.trim();
+      const date = $('ni-meal-date').value;
+      if (!food || !date) return;
+
+      meals.push({
+        id: String(Date.now()) + Math.random(),
+        type: $('ni-meal-type').value,
+        date,
+        food,
+        notes: $('ni-meal-notes').value.trim()
+      });
+
+      $('ni-meal-form').reset();
+      $('ni-meal-date').value = localDate;
+      renderMeals();
+    });
+
+    $('ni-label-form').addEventListener('submit', event => {
+      event.preventDefault();
+
+      const name = $('ni-label-name').value.trim();
+      if (!name) return;
+
+      labels.push({
+        id: String(Date.now()) + Math.random(),
+        name,
+        ingredients: $('ni-label-ingredients').value.trim(),
+        allergens: $('ni-label-allergens').value.trim(),
+        notes: $('ni-label-notes').value.trim()
+      });
+
+      $('ni-label-form').reset();
+      renderLabels();
+    });
+
+    $('ni-notes-form').addEventListener('submit', event => {
+      event.preventDefault();
+
+      const text = $('ni-note-text').value.trim();
+      if (!text) return;
+
+      notes.push({ id: String(Date.now()) + Math.random(), text, date: localDate });
+      $('ni-notes-form').reset();
+      renderNotes();
+    });
+
+    root.addEventListener('click', event => {
+      const mealButton = event.target.closest('[data-meal-delete]');
+      const labelButton = event.target.closest('[data-label-delete]');
+      const noteButton = event.target.closest('[data-note-delete]');
+
+      if (mealButton) {
+        meals = meals.filter(item => item.id !== mealButton.dataset.mealDelete);
+        renderMeals();
+      }
+
+      if (labelButton) {
+        labels = labels.filter(item => item.id !== labelButton.dataset.labelDelete);
+        renderLabels();
+      }
+
+      if (noteButton) {
+        notes = notes.filter(item => item.id !== noteButton.dataset.noteDelete);
+        renderNotes();
+      }
+    });
+
+    $('ni-search').addEventListener('input', renderMeals);
+    $('ni-filter').addEventListener('change', renderMeals);
+
+    renderMeals();
+    renderLabels();
+    renderNotes();
+  })();
+  </script>
 </section>
 
 <section id="timeline" class="section">
