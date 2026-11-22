@@ -954,39 +954,54 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
     </div>
   </div>
 
-  <!-- LABEL NOTES -->
-  <div class="ni-card">
-    <h3>Label reader notes</h3>
-    <p class="ni-muted">
-      Save ingredient and label details for a product you want to remember.
-      This is a manual notes tool, not an automated label scanner.
-    </p>
+<!-- FOOD KNOWLEDGE -->
+<div class="ni-card">
+  <h3>Food knowledge</h3>
+  <p class="ni-muted">
+    A little knowledge about what food provides and how nutrients
+    support everyday body functions.
+  </p>
 
-    <form id="ni-label-form">
-      <label>
-        Product name
-        <input id="ni-label-name" placeholder="Name of product" required>
-      </label>
-      <label>
-        Ingredients
-        <textarea id="ni-label-ingredients" placeholder="Ingredients copied from the package"></textarea>
-      </label>
-      <label>
-        Allergens declared on label
-        <input id="ni-label-allergens" placeholder="Allergens stated on package">
-      </label>
-      <label>
-        Notes
-        <textarea id="ni-label-notes" placeholder="Questions, preferences, or other label information"></textarea>
-      </label>
-      <button class="ni-btn" type="submit">Save label notes</button>
-    </form>
+  <div class="ni-food-grid">
+    <div class="ni-food">
+      <strong>Iron</strong>
+      Helps the body make hemoglobin, which carries oxygen.
+      <p class="ni-muted">Sources: lentils, beans, leafy vegetables,
+      fortified cereals.</p>
+    </div>
 
-    <div id="ni-label-list"></div>
-    <div id="ni-label-empty" class="ni-empty">
-      No label notes saved yet.
+    <div class="ni-food">
+      <strong>Calcium</strong>
+      Supports bones, teeth, muscles and nerve function.
+      <p class="ni-muted">Sources: milk, curd, paneer, calcium-set tofu.</p>
+    </div>
+
+    <div class="ni-food">
+      <strong>Protein</strong>
+      Used for growth, repair and many body functions.
+      <p class="ni-muted">Sources: pulses, eggs, dairy, soy, nuts.</p>
+    </div>
+
+    <div class="ni-food">
+      <strong>Fibre</strong>
+      Supports digestion and helps maintain normal bowel function.
+      <p class="ni-muted">Sources: fruits, vegetables, beans, oats,
+      whole grains.</p>
+    </div>
+
+    <div class="ni-food">
+      <strong>Vitamin C</strong>
+      Supports connective tissue, healing and iron absorption.
+      <p class="ni-muted">Sources: guava, oranges, amla, peppers.</p>
+    </div>
+
+    <div class="ni-food">
+      <strong>Healthy fats</strong>
+      Provide energy and help absorb certain vitamins.
+      <p class="ni-muted">Sources: nuts, seeds, groundnut, oils.</p>
     </div>
   </div>
+</div>
 
   <!-- PERSONAL NOTES -->
   <div class="ni-card">
