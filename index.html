@@ -1181,10 +1181,316 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
   </script>
 </section>
 
-<section id="timeline" class="section">
-  <div class="tag">04 / YOUR HISTORY</div>
-  <h2>Health Timeline</h2>
-  <div class="card"><h3>Your records, over time.</h3><p>Future entries will appear chronologically as you add records to your archive.</p></div>
+<section id="timeline">
+  <style>
+    #timeline {
+      --ht-bg: #f7f2e9;
+      --ht-card: #fffdf9;
+      --ht-ink: #49382f;
+      --ht-muted: #88776b;
+      --ht-line: #e7ddd0;
+      background: var(--ht-bg);
+      color: var(--ht-ink);
+      padding: 24px;
+      border-radius: 18px;
+      font-family: inherit;
+    }
+    #timeline * { box-sizing: border-box; }
+    #timeline h2, #timeline h3 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+    }
+    #timeline h2 { font-size: 30px; margin: 0 0 8px; }
+    #timeline h3 { font-size: 20px; margin: 0 0 12px; }
+    #timeline p { line-height: 1.6; }
+    .ht-muted { color: var(--ht-muted); font-size: 13px; }
+    .ht-card {
+      background: var(--ht-card);
+      border: 1px solid var(--ht-line);
+      border-radius: 15px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .ht-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    #timeline input, #timeline select,
+    #timeline textarea, #timeline button {
+      font: inherit;
+    }
+    #timeline input, #timeline select, #timeline textarea {
+      width: 100%;
+      border: 1px solid var(--ht-line);
+      background: white;
+      color: var(--ht-ink);
+      padding: 11px;
+      border-radius: 10px;
+      margin-top: 5px;
+    }
+    #timeline textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    #timeline label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .ht-btn {
+      border: 0;
+      background: var(--ht-ink);
+      color: white;
+      padding: 11px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .ht-btn.secondary {
+      background: transparent;
+      color: var(--ht-ink);
+      border: 1px solid var(--ht-line);
+    }
+    .ht-btn:hover { opacity: .86; }
+    .ht-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .ht-pill {
+      display: inline-block;
+      border: 1px solid var(--ht-line);
+      border-radius: 20px;
+      padding: 4px 9px;
+      font-size: 11px;
+    }
+    .ht-entry {
+      position: relative;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--ht-line);
+    }
+    .ht-entry:last-child { border-bottom: 0; }
+    .ht-entry-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 8px 0 4px;
+    }
+    .ht-empty {
+      padding: 24px 10px;
+      text-align: center;
+      color: var(--ht-muted);
+      font-size: 13px;
+    }
+    @media(max-width:600px) {
+      #timeline { padding: 15px; }
+      .ht-grid { grid-template-columns: 1fr; }
+      #timeline h2 { font-size: 25px; }
+    }
+  </style>
+
+  <header>
+    <p class="ht-muted">PERSONAL HEALTH · HISTORY</p>
+    <h2>Health Timeline</h2>
+    <p class="ht-muted">
+      A chronological record of appointments, reports, and events
+      you want to keep track of.
+    </p>
+  </header>
+
+  <!-- ADD EVENT -->
+  <div class="ht-card">
+    <h3>Add an event</h3>
+
+    <form id="ht-form">
+      <div class="ht-grid">
+        <label>
+          Event type
+          <select id="ht-type" required>
+            <option value="Appointment">Appointment</option>
+            <option value="Lab Report">Lab Report</option>
+            <option value="Medication">Medication</option>
+            <option value="Vaccination">Vaccination</option>
+            <option value="General">General</option>
+          </select>
+        </label>
+
+        <label>
+          Date
+          <input id="ht-date" type="date" required>
+        </label>
+      </div>
+
+      <label>
+        Event title
+        <input id="ht-title" placeholder="Give this event a title" required>
+      </label>
+
+      <label>
+        Details (optional)
+        <textarea id="ht-details" placeholder="Additional details you would like to remember..."></textarea>
+      </label>
+
+      <div class="ht-actions">
+        <button class="ht-btn" type="submit">Add to timeline</button>
+        <button class="ht-btn secondary" type="reset">Clear</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="ht-card">
+    <h3>Your history</h3>
+
+    <div class="ht-grid">
+      <label>
+        Search events
+        <input id="ht-search" placeholder="Search your timeline">
+      </label>
+
+      <label>
+        Filter by type
+        <select id="ht-filter">
+          <option value="All">All events</option>
+          <option value="Appointment">Appointments</option>
+          <option value="Lab Report">Lab reports</option>
+          <option value="Medication">Medications</option>
+          <option value="Vaccination">Vaccinations</option>
+          <option value="General">General</option>
+        </select>
+      </label>
+    </div>
+
+    <div id="ht-list"></div>
+
+    <div id="ht-empty" class="ht-empty">
+      Your timeline is empty. Add an event to get started.
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('timeline');
+    if (!root || root.dataset.htInitialized === '1') return;
+    root.dataset.htInitialized = '1';
+
+    // Temporary in-page memory only.
+    // This section does not connect to Supabase.
+    let events = [];
+
+    const $ = id => root.querySelector('#' + id);
+
+    const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    }[char]));
+
+    const now = new Date();
+    const today = [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, '0'),
+      String(now.getDate()).padStart(2, '0')
+    ].join('-');
+
+    $('ht-date').value = today;
+
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      const parts = dateString.split('-').map(Number);
+      const date = new Date(parts[0], parts[1] - 1, parts[2]);
+      return date.toLocaleDateString(undefined, {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+
+    function render() {
+      const query = $('ht-search').value.trim().toLowerCase();
+      const selectedType = $('ht-filter').value;
+
+      const filtered = events
+        .filter(item => {
+          const matchesSearch =
+            item.title.toLowerCase().includes(query) ||
+            item.details.toLowerCase().includes(query) ||
+            item.type.toLowerCase().includes(query);
+
+          const matchesType =
+            selectedType === 'All' || item.type === selectedType;
+
+          return matchesSearch && matchesType;
+        })
+        .sort((a, b) =>
+          b.date.localeCompare(a.date) || b.createdAt - a.createdAt
+        );
+
+      $('ht-list').innerHTML = filtered.map(item => `
+        <article class="ht-entry">
+          <span class="ht-pill">${escapeHTML(item.type)}</span>
+          <div class="ht-muted">${escapeHTML(formatDate(item.date))}</div>
+          <div class="ht-entry-title">${escapeHTML(item.title)}</div>
+          ${item.details
+            ? `<p>${escapeHTML(item.details)}</p>`
+            : ''}
+          <button type="button"
+            class="ht-btn secondary"
+            data-ht-delete="${item.id}">
+            Delete event
+          </button>
+        </article>
+      `).join('');
+
+      $('ht-empty').style.display = filtered.length ? 'none' : 'block';
+      $('ht-empty').textContent = events.length
+        ? 'No events match your search or filter.'
+        : 'Your timeline is empty. Add an event to get started.';
+    }
+
+    $('ht-form').addEventListener('submit', event => {
+      event.preventDefault();
+
+      const title = $('ht-title').value.trim();
+      const date = $('ht-date').value;
+      const details = $('ht-details').value.trim();
+      const type = $('ht-type').value;
+
+      if (!title || !date) return;
+
+      events.push({
+        id: String(Date.now()) + Math.random(),
+        createdAt: Date.now(),
+        type,
+        date,
+        title,
+        details
+      });
+
+      $('ht-form').reset();
+      $('ht-date').value = today;
+      render();
+    });
+
+    $('ht-list').addEventListener('click', event => {
+      const button = event.target.closest('[data-ht-delete]');
+      if (!button) return;
+
+      events = events.filter(item =>
+        item.id !== button.dataset.htDelete
+      );
+
+      render();
+    });
+
+    $('ht-search').addEventListener('input', render);
+    $('ht-filter').addEventListener('change', render);
+
+    render();
+  })();
+  </script>
 </section>
 
 <section id="qr" class="section">
