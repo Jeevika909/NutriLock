@@ -692,7 +692,840 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
 </script>
 </section>
 <!-- =============== END HEALTH ARCHIVE =============== -->
-    <!-- REPORT HISTORY -->
+<!-- =============== MY REPORTS =============== -->
+<section id="my-reports">
+
+<style>
+#my-reports {
+  --mr-bg: #f7f2eb;
+  --mr-card: #fffdf9;
+  --mr-ink: #604a3a;
+  --mr-muted: #927f6e;
+  --mr-line: #e6d9cb;
+  --mr-accent: #82664e;
+  background: var(--mr-bg);
+  color: var(--mr-ink);
+  padding: 25px 16px;
+  border-radius: 20px;
+  font-family: inherit;
+}
+#my-reports * { box-sizing: border-box; }
+
+#my-reports .mr-wrap {
+  max-width: 950px;
+  margin: auto;
+}
+
+#my-reports .mr-eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--mr-muted);
+  margin-bottom: 10px;
+}
+
+#my-reports h2 {
+  font: normal 36px Georgia, serif;
+  margin: 0 0 8px;
+}
+
+#my-reports h3 {
+  font: normal 22px Georgia, serif;
+  margin: 0 0 17px;
+}
+
+#my-reports .mr-intro {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--mr-muted);
+  margin-bottom: 24px;
+}
+
+#my-reports .mr-card {
+  background: var(--mr-card);
+  border: 1px solid var(--mr-line);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+#my-reports .mr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+#my-reports .mr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+#my-reports .mr-wide {
+  grid-column: 1 / -1;
+}
+
+#my-reports label {
+  color: var(--mr-muted);
+  font-size: 12px;
+}
+
+#my-reports input,
+#my-reports select,
+#my-reports textarea {
+  width: 100%;
+  border: 1px solid var(--mr-line);
+  background: #fff;
+  color: var(--mr-ink);
+  border-radius: 10px;
+  padding: 12px;
+  font: inherit;
+  font-size: 14px;
+  outline: none;
+}
+
+#my-reports input:focus,
+#my-reports select:focus,
+#my-reports textarea:focus {
+  border-color: var(--mr-accent);
+}
+
+#my-reports textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+#my-reports .mr-upload {
+  border: 1px dashed #cbb9a7;
+  background: #faf6f0;
+  padding: 16px;
+  border-radius: 12px;
+}
+
+#my-reports .mr-hint {
+  color: var(--mr-muted);
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+#my-reports .mr-preview {
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  background: #f1e9e0;
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+
+#my-reports .mr-preview img {
+  max-width: 100%;
+  max-height: 260px;
+  display: block;
+  margin: 12px auto;
+  border-radius: 8px;
+}
+
+#my-reports .mr-preview iframe {
+  width: 100%;
+  height: 320px;
+  border: 0;
+  margin-top: 12px;
+  background: white;
+}
+
+#my-reports .mr-btn {
+  background: var(--mr-accent);
+  color: white;
+  border: 1px solid var(--mr-accent);
+  border-radius: 10px;
+  padding: 11px 15px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+
+#my-reports .mr-btn:hover {
+  opacity: .86;
+}
+
+#my-reports .mr-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+#my-reports .mr-secondary {
+  background: transparent;
+  color: var(--mr-ink);
+  border-color: var(--mr-line);
+}
+
+#my-reports .mr-danger {
+  background: transparent;
+  color: #92564c;
+  border-color: #dfc8c0;
+}
+
+#my-reports .mr-message {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+#my-reports .mr-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+#my-reports .mr-toolbar input {
+  flex: 1;
+  min-width: 0;
+}
+
+#my-reports .mr-toolbar select {
+  min-width: 145px;
+  width: auto;
+}
+
+#my-reports .mr-count {
+  font-size: 12px;
+  color: var(--mr-muted);
+  margin-bottom: 12px;
+}
+
+#my-reports .mr-empty {
+  text-align: center;
+  border: 1px dashed var(--mr-line);
+  border-radius: 12px;
+  padding: 28px 15px;
+  color: var(--mr-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+#my-reports .mr-report {
+  background: #fff;
+  border: 1px solid var(--mr-line);
+  border-radius: 13px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+#my-reports .mr-report-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+#my-reports .mr-title {
+  font: normal 20px Georgia, serif;
+  overflow-wrap: anywhere;
+}
+
+#my-reports .mr-meta {
+  font-size: 11px;
+  color: var(--mr-muted);
+  line-height: 1.7;
+  margin-top: 6px;
+}
+
+#my-reports .mr-tag {
+  font-size: 10px;
+  background: #f1e9e0;
+  border-radius: 20px;
+  padding: 5px 9px;
+  white-space: nowrap;
+}
+
+#my-reports .mr-notes {
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-top: 12px;
+}
+
+#my-reports .mr-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+#my-reports .mr-actions .mr-btn {
+  padding: 8px 12px;
+  font-size: 12px;
+}
+
+#my-reports .mr-privacy {
+  color: var(--mr-muted);
+  font-size: 11px;
+  line-height: 1.7;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  #my-reports .mr-grid {
+    grid-template-columns: 1fr;
+  }
+  #my-reports .mr-wide {
+    grid-column: auto;
+  }
+  #my-reports .mr-toolbar {
+    flex-direction: column;
+  }
+  #my-reports .mr-toolbar select {
+    width: 100%;
+  }
+  #my-reports .mr-report-head {
+    flex-direction: column;
+  }
+}
+</style>
+
+<div class="mr-wrap">
+
+  <div class="mr-eyebrow">NutriLock · Document Library</div>
+
+  <h2>My Reports</h2>
+
+  <div class="mr-intro">
+    Your collection of health documents, organised and easy to find.
+  </div>
+
+  <!-- UPLOAD FORM -->
+  <div class="mr-card">
+
+    <h3>Add a report</h3>
+
+    <form id="mr-form">
+      <div class="mr-grid">
+
+        <div class="mr-field">
+          <label for="mr-title">Report name</label>
+          <input
+            id="mr-title"
+            type="text"
+            maxlength="100"
+            placeholder="e.g. Annual Checkup"
+            required
+          >
+        </div>
+
+        <div class="mr-field">
+          <label for="mr-category">Category</label>
+          <select id="mr-category" required>
+            <option value="">Choose category</option>
+            <option>Blood Test</option>
+            <option>Imaging / Scan</option>
+            <option>Prescription</option>
+            <option>Consultation</option>
+            <option>Vaccination</option>
+            <option>General Record</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="mr-field">
+          <label for="mr-date">Report date</label>
+          <input id="mr-date" type="date" required>
+        </div>
+
+        <div class="mr-field mr-wide">
+          <label for="mr-notes">Notes (optional)</label>
+          <textarea
+            id="mr-notes"
+            maxlength="1000"
+            placeholder="A short description of this report..."
+          ></textarea>
+        </div>
+
+        <div class="mr-field mr-wide">
+          <label for="mr-file">Upload file</label>
+          <div class="mr-upload">
+            <input
+              id="mr-file"
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+              required
+            >
+            <div class="mr-hint">
+              Supported files: PDF, JPG, JPEG, PNG · Maximum 10 MB
+            </div>
+            <div id="mr-preview" class="mr-preview"></div>
+          </div>
+        </div>
+
+        <div class="mr-field mr-wide">
+          <button id="mr-save" class="mr-btn" type="submit">
+            Save Report
+          </button>
+        </div>
+
+      </div>
+    </form>
+
+    <div id="mr-message" class="mr-message" role="status" aria-live="polite"></div>
+
+  </div>
+
+  <!-- REPORT LIBRARY -->
+  <div class="mr-card">
+
+    <h3>Report library</h3>
+
+    <div class="mr-toolbar">
+      <input
+        id="mr-search"
+        type="search"
+        placeholder="Search your reports..."
+        aria-label="Search reports"
+      >
+
+      <select id="mr-filter" aria-label="Filter reports">
+        <option value="">All categories</option>
+        <option>Blood Test</option>
+        <option>Imaging / Scan</option>
+        <option>Prescription</option>
+        <option>Consultation</option>
+        <option>Vaccination</option>
+        <option>General Record</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div id="mr-count" class="mr-count">Loading...</div>
+
+    <div id="mr-list"></div>
+
+    <div class="mr-privacy">
+      Reports are saved in this browser's local storage database (IndexedDB).
+      This is not encrypted medical storage, cloud backup, or device syncing.
+      Do not store sensitive medical files here until secure storage has been implemented.
+    </div>
+
+  </div>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById("my-reports");
+  if (!root || root.dataset.mrReady === "true") return;
+  root.dataset.mrReady = "true";
+
+  const $ = id => root.querySelector("#" + id);
+
+  const form = $("mr-form");
+  const titleInput = $("mr-title");
+  const categoryInput = $("mr-category");
+  const dateInput = $("mr-date");
+  const notesInput = $("mr-notes");
+  const fileInput = $("mr-file");
+  const preview = $("mr-preview");
+  const message = $("mr-message");
+  const saveButton = $("mr-save");
+  const searchInput = $("mr-search");
+  const filterInput = $("mr-filter");
+  const list = $("mr-list");
+  const count = $("mr-count");
+
+  const DB_NAME = "NutriLockMyReportsDB";
+  const STORE_NAME = "reports";
+  const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+  let database = null;
+  let selectedFile = null;
+  let previewUrl = null;
+
+  const today = new Date();
+  dateInput.value = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0")
+  ].join("-");
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.style.color =
+      type === "error" ? "#984c43" :
+      type === "success" ? "#526b4d" :
+      "#927f6e";
+  }
+
+  function clearMessage() {
+    message.textContent = "";
+  }
+
+  function openDatabase() {
+    return new Promise((resolve, reject) => {
+      if (!window.indexedDB) {
+        reject(new Error("IndexedDB is not supported by this browser."));
+        return;
+      }
+
+      const request = indexedDB.open(DB_NAME, 1);
+
+      request.onupgradeneeded = event => {
+        const db = event.target.result;
+
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME, { keyPath: "id" });
+        }
+      };
+
+      request.onsuccess = event => resolve(event.target.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function store(mode = "readonly") {
+    return database.transaction(STORE_NAME, mode)
+      .objectStore(STORE_NAME);
+  }
+
+  function getAllReports() {
+    return new Promise((resolve, reject) => {
+      const request = store().getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function saveReport(report) {
+    return new Promise((resolve, reject) => {
+      const request = store("readwrite").put(report);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function deleteReport(id) {
+    return new Promise((resolve, reject) => {
+      const request = store("readwrite").delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  function getType(file) {
+    const name = file.name.toLowerCase();
+
+    if (file.type === "application/pdf" || name.endsWith(".pdf")) return "pdf";
+    if (file.type === "image/png" || name.endsWith(".png")) return "png";
+    if (file.type === "image/jpeg" || name.endsWith(".jpg") || name.endsWith(".jpeg")) return "jpg";
+
+    return "";
+  }
+
+  function readableSize(bytes) {
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+  }
+
+  function readableDate(value) {
+    if (!value) return "Date unavailable";
+
+    const parts = value.split("-").map(Number);
+    const d = new Date(parts[0], parts[1] - 1, parts[2]);
+
+    return d.toLocaleDateString(undefined, {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    });
+  }
+
+  function clearPreview() {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+      previewUrl = null;
+    }
+
+    preview.replaceChildren();
+    preview.style.display = "none";
+  }
+
+  function makePreview(file) {
+    clearPreview();
+
+    if (!file) return;
+
+    previewUrl = URL.createObjectURL(file);
+    preview.style.display = "block";
+
+    const fileInfo = document.createElement("div");
+    fileInfo.textContent = file.name + " · " + readableSize(file.size);
+    preview.appendChild(fileInfo);
+
+    if (getType(file) === "pdf") {
+      const frame = document.createElement("iframe");
+      frame.title = "Selected report preview";
+      frame.src = previewUrl;
+      preview.appendChild(frame);
+    } else {
+      const image = document.createElement("img");
+      image.alt = "Selected report preview";
+      image.src = previewUrl;
+      preview.appendChild(image);
+    }
+  }
+
+  function createButton(text, className, action) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "mr-btn " + (className || "");
+    button.textContent = text;
+    button.addEventListener("click", action);
+    return button;
+  }
+
+  function viewReport(report) {
+    const blob = new Blob([report.file], { type: report.mime });
+    const url = URL.createObjectURL(blob);
+    const opened = window.open(url, "_blank");
+
+    if (!opened) {
+      showMessage("Popup blocked. Allow popups to view the report.", "error");
+    }
+
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  }
+
+  function downloadReport(report) {
+    const blob = new Blob([report.file], { type: report.mime });
+    const url = URL.createObjectURL(blob);
+
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = report.fileName;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 10000);
+  }
+
+  async function removeReport(id) {
+    if (!confirm("Delete this report permanently from this browser?")) return;
+
+    try {
+      await deleteReport(id);
+      showMessage("Report deleted.", "success");
+      await renderReports();
+    } catch (error) {
+      showMessage("Could not delete this report.", "error");
+    }
+  }
+
+  async function renderReports() {
+    try {
+      const allReports = await getAllReports();
+
+      const query = searchInput.value.trim().toLowerCase();
+      const category = filterInput.value;
+
+      const filtered = allReports
+        .filter(report => {
+          const text = [
+            report.title,
+            report.category,
+            report.notes,
+            report.fileName
+          ].join(" ").toLowerCase();
+
+          return text.includes(query) &&
+            (!category || report.category === category);
+        })
+        .sort((a, b) => b.date.localeCompare(a.date));
+
+      count.textContent = filtered.length +
+        (filtered.length === 1 ? " report" : " reports");
+
+      list.replaceChildren();
+
+      if (!filtered.length) {
+        const empty = document.createElement("div");
+        empty.className = "mr-empty";
+        empty.textContent = allReports.length
+          ? "No reports match your search."
+          : "No reports yet. Upload your first report above.";
+        list.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(report => {
+        const card = document.createElement("article");
+        card.className = "mr-report";
+
+        const head = document.createElement("div");
+        head.className = "mr-report-head";
+
+        const details = document.createElement("div");
+
+        const title = document.createElement("div");
+        title.className = "mr-title";
+        title.textContent = report.title;
+
+        const meta = document.createElement("div");
+        meta.className = "mr-meta";
+        meta.textContent =
+          readableDate(report.date) + " · " +
+          report.fileName + " · " +
+          readableSize(report.fileSize);
+
+        details.append(title, meta);
+
+        const tag = document.createElement("span");
+        tag.className = "mr-tag";
+        tag.textContent = report.category;
+
+        head.append(details, tag);
+        card.appendChild(head);
+
+        if (report.notes) {
+          const notes = document.createElement("div");
+          notes.className = "mr-notes";
+          notes.textContent = report.notes;
+          card.appendChild(notes);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "mr-actions";
+
+        actions.appendChild(
+          createButton("View", "", () => viewReport(report))
+        );
+
+        actions.appendChild(
+          createButton("Download", "mr-secondary", () => downloadReport(report))
+        );
+
+        actions.appendChild(
+          createButton("Delete", "mr-danger", () => removeReport(report.id))
+        );
+
+        card.appendChild(actions);
+        list.appendChild(card);
+      });
+
+    } catch (error) {
+      count.textContent = "Unable to load reports";
+      list.textContent = "There was a problem loading your report library.";
+    }
+  }
+
+  fileInput.addEventListener("change", () => {
+    clearMessage();
+    clearPreview();
+    selectedFile = null;
+
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+
+    if (!getType(file)) {
+      fileInput.value = "";
+      showMessage("Choose a PDF, JPG, JPEG, or PNG file.", "error");
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      fileInput.value = "";
+      showMessage("File is too large. Maximum size is 10 MB.", "error");
+      return;
+    }
+
+    if (!file.size) {
+      fileInput.value = "";
+      showMessage("This file is empty.", "error");
+      return;
+    }
+
+    selectedFile = file;
+    makePreview(file);
+  });
+
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
+    clearMessage();
+
+    if (!selectedFile) {
+      showMessage("Please select a report file.", "error");
+      return;
+    }
+
+    const file = selectedFile;
+    const type = getType(file);
+
+    const report = {
+      id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random()),
+      title: titleInput.value.trim(),
+      category: categoryInput.value,
+      date: dateInput.value,
+      notes: notesInput.value.trim(),
+      fileName: file.name,
+      mime: type === "pdf" ? "application/pdf" :
+             type === "png" ? "image/png" : "image/jpeg",
+      fileSize: file.size,
+      file: file
+    };
+
+    if (!report.title || !report.category || !report.date) {
+      showMessage("Please fill in the title, category, and date.", "error");
+      return;
+    }
+
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+
+    try {
+      await saveReport(report);
+
+      form.reset();
+      const d = new Date();
+      dateInput.value = [
+        d.getFullYear(),
+        String(d.getMonth() + 1).padStart(2, "0"),
+        String(d.getDate()).padStart(2, "0")
+      ].join("-");
+
+      selectedFile = null;
+      clearPreview();
+
+      showMessage("Your report has been saved successfully.", "success");
+      await renderReports();
+
+    } catch (error) {
+      showMessage(
+        "Could not save your report. Your browser storage may be full.",
+        "error"
+      );
+    } finally {
+      saveButton.disabled = false;
+      saveButton.textContent = "Save Report";
+    }
+  });
+
+  searchInput.addEventListener("input", renderReports);
+  filterInput.addEventListener("change", renderReports);
+
+  openDatabase()
+    .then(db => {
+      database = db;
+      renderReports();
+    })
+    .catch(error => {
+      count.textContent = "Storage unavailable";
+      list.textContent = "Your browser could not open report storage.";
+      showMessage("Report storage could not be initialized.", "error");
+    });
+
+})();
+</script>
+</section>
+<!-- =============== END MY REPORTS =============== -->
+  <!-- REPORT HISTORY -->
     <div class="ha-panel">
 
       <h3 class="ha-panel-title">Your records</h3>
