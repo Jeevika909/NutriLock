@@ -246,16 +246,38 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
 </section>
 
 <section id="archive" class="section">
-  <div class="tag">01 / PERSONAL RECORDS</div>
-  <h2>Your Health Archive</h2>
-  <p class="intro">A central place for your health documents, medical history and important personal records.</p>
-  <div class="archive">
-    <h3>Your archive categories</h3>
-    <div class="archive-row"><span>Medical Reports</span><span>→</span></div>
-    <div class="archive-row"><span>Medical History</span><span>→</span></div>
-    <div class="archive-row"><span>Allergies & Preferences</span><span>→</span></div>
-    <div class="archive-row"><span>Medication Records</span><span>→</span></div>
+ <div class="nl-archive">
+
+  <div class="nl-archive-header">
+    <h2>Health Archive</h2>
+    <p>Your personal health records, securely stored.</p>
   </div>
+
+  <div class="nl-card">
+    <h3>Upload a medical report</h3>
+    <p>Store your medical documents in your personal archive.</p>
+
+    <input
+      type="file"
+      id="nl-report-file"
+      accept=".pdf,.png,.jpg,.jpeg"
+    />
+
+    <button class="nl-btn" id="nl-upload-btn" type="button">
+      Upload report
+    </button>
+
+    <p id="nl-upload-status" class="nl-muted"></p>
+  </div>
+
+  <div class="nl-card">
+    <h3>Your saved reports</h3>
+    <div id="nl-report-list">
+      <p class="nl-muted">Your uploaded reports will appear here.</p>
+    </div>
+  </div>
+
+</div>
 </section>
 
 <section id="reports" class="section">
