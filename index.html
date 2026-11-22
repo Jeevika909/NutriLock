@@ -280,16 +280,400 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
 </div>
 </section>
 
-<section id="reports" class="section">
-  <div class="tag">02 / DOCUMENT INTELLIGENCE</div>
-  <h2>My Reports</h2>
-  <p class="intro">A future- ready space for uploading, organising and understanding supported medical documents.</p>
-  <div class="card">
-    <div class="card-icon">▧</div>
-    <h3>Report Centre</h3>
-    <p>Report uploading and analysis will be connected after secure account and storage setup.</p>
-    <span class="tag">DEVELOPMENT STAGE</span>
+<section id="reports" class="nl-reports">
+  <style>
+    .nl-reports {
+      --r-bg: #f7f2e9;
+      --r-card: #fffdf9;
+      --r-ink: #49382f;
+      --r-muted: #88776b;
+      --r-line: #e7ddd0;
+      --r-accent: #a88b72;
+      background: var(--r-bg);
+      color: var(--r-ink);
+      padding: 24px;
+      border-radius: 18px;
+      font-family: inherit;
+    }
+    .nl-reports * { box-sizing: border-box; }
+    .nl-reports h2, .nl-reports h3 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+    }
+    .nl-reports h2 { font-size: 30px; margin: 0 0 8px; }
+    .nl-reports p { line-height: 1.6; }
+    .nl-rpt-muted { color: var(--r-muted); font-size: 13px; }
+    .nl-rpt-card {
+      background: var(--r-card);
+      border: 1px solid var(--r-line);
+      border-radius: 15px;
+      padding: 18px;
+      margin-top: 16px;
+    }
+    .nl-rpt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .nl-reports input, .nl-reports select, .nl-reports button {
+      font: inherit;
+    }
+    .nl-reports input, .nl-reports select {
+      width: 100%;
+      border: 1px solid var(--r-line);
+      background: #fff;
+      color: var(--r-ink);
+      padding: 11px;
+      border-radius: 10px;
+      margin-top: 5px;
+    }
+    .nl-reports label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .nl-rpt-btn {
+      border: 0;
+      background: var(--r-ink);
+      color: white;
+      padding: 11px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .nl-rpt-btn.secondary {
+      background: transparent;
+      color: var(--r-ink);
+      border: 1px solid var(--r-line);
+    }
+    .nl-rpt-btn:hover { opacity: .88; }
+    .nl-rpt-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .nl-rpt-table-wrap { overflow-x: auto; }
+    .nl-rpt-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 540px;
+    }
+    .nl-rpt-table th, .nl-rpt-table td {
+      text-align: left;
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--r-line);
+      font-size: 13px;
+    }
+    .nl-rpt-table th { color: var(--r-muted); font-weight: 500; }
+    .nl-rpt-empty {
+      padding: 22px 10px;
+      color: var(--r-muted);
+      text-align: center;
+    }
+    .nl-rpt-pill {
+      display: inline-block;
+      border: 1px solid var(--r-line);
+      border-radius: 20px;
+      padding: 4px 9px;
+      font-size: 11px;
+    }
+    .nl-rpt-explain {
+      background: #f2e9dd;
+      border-radius: 12px;
+      padding: 13px;
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    @media(max-width:600px) {
+      .nl-reports { padding: 15px; }
+      .nl-rpt-grid { grid-template-columns: 1fr; }
+      .nl-reports h2 { font-size: 25px; }
+    }
+  </style>
+
+  <header>
+    <p class="nl-rpt-muted">PERSONAL HEALTH · REPORTS</p>
+    <h2>Reports</h2>
+    <p class="nl-rpt-muted">
+      Review results, understand terminology, and keep track of
+      information from your reports.
+    </p>
+  </header>
+
+  <div class="nl-rpt-card">
+    <h3>Record a result</h3>
+    <p class="nl-rpt-muted">
+      Enter a result as it appears on your lab report.
+      Keep the original report for context.
+    </p>
+
+    <form id="nl-rpt-form">
+      <div class="nl-rpt-grid">
+        <label>
+          Test name
+          <input id="nl-rpt-name" placeholder="e.g. Hemoglobin" required>
+        </label>
+        <label>
+          Report date
+          <input id="nl-rpt-date" type="date" required>
+        </label>
+        <label>
+          Result value
+          <input id="nl-rpt-value" type="number" step="any" placeholder="Value" required>
+        </label>
+        <label>
+          Unit
+          <input id="nl-rpt-unit" placeholder="e.g. g/dL" required>
+        </label>
+        <label>
+          Lower reference value (optional)
+          <input id="nl-rpt-low" type="number" step="any" placeholder="From report">
+        </label>
+        <label>
+          Upper reference value (optional)
+          <input id="nl-rpt-high" type="number" step="any" placeholder="From report">
+        </label>
+      </div>
+
+      <label>
+        Notes (optional)
+        <input id="nl-rpt-notes" placeholder="Additional context">
+      </label>
+
+      <div class="nl-rpt-actions">
+        <button class="nl-rpt-btn" type="submit">Add result</button>
+        <button class="nl-rpt-btn secondary" type="reset">Clear form</button>
+      </div>
+    </form>
   </div>
+
+  <div class="nl-rpt-card">
+    <h3>Result history</h3>
+
+    <div class="nl-rpt-grid">
+      <label>
+        Search
+        <input id="nl-rpt-search" placeholder="Search test name or unit">
+      </label>
+      <label>
+        Filter
+        <select id="nl-rpt-filter">
+          <option value="all">All results</option>
+          <option value="within">Within entered range</option>
+          <option value="outside">Outside entered range</option>
+          <option value="unknown">No reference range entered</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="nl-rpt-table-wrap">
+      <table class="nl-rpt-table">
+        <thead>
+          <tr>
+            <th>Test</th>
+            <th>Date</th>
+            <th>Result</th>
+            <th>Entered range</th>
+            <th>Range comparison</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="nl-rpt-rows"></tbody>
+      </table>
+    </div>
+    <div id="nl-rpt-empty" class="nl-rpt-empty">
+      No results added yet. Enter a result above to begin.
+    </div>
+  </div>
+
+  <div class="nl-rpt-card">
+    <h3>Understanding your results</h3>
+    <div class="nl-rpt-explain">
+      <strong>What does a reference range mean?</strong><br>
+      A reference range is a comparison interval supplied by a laboratory.
+      It can vary by lab, testing method, age, and other factors.
+      A result outside the interval does not automatically mean something
+      is wrong, and a result inside it does not guarantee that everything
+      is fine.
+    </div>
+    <div class="nl-rpt-explain">
+      <strong>About this section</strong><br>
+      This tool organizes values you enter and compares them only with
+      the range you provide. It does not diagnose conditions or replace
+      the interpretation of a qualified healthcare professional.
+    </div>
+  </div>
+
+  <div class="nl-rpt-card">
+    <h3>Report comparison</h3>
+    <p class="nl-rpt-muted">
+      Added results with the same test name can be reviewed together
+      in the result history above, ordered by date.
+    </p>
+    <div id="nl-rpt-comparison" class="nl-rpt-explain">
+      Add two or more results for the same test to see their recorded
+      values together.
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    const root = document.getElementById('reports');
+    if (!root || root.dataset.reportsInitialized === '1') return;
+    root.dataset.reportsInitialized = '1';
+
+    const form = root.querySelector('#nl-rpt-form');
+    const rows = root.querySelector('#nl-rpt-rows');
+    const empty = root.querySelector('#nl-rpt-empty');
+    const search = root.querySelector('#nl-rpt-search');
+    const filter = root.querySelector('#nl-rpt-filter');
+    const comparison = root.querySelector('#nl-rpt-comparison');
+
+    // These entries are held in page memory only.
+    // They are not saved to Supabase or local storage.
+    let results = [];
+
+    const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, char => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;',
+      '"': '&quot;', "'": '&#39;'
+    }[char]));
+
+    function getStatus(item) {
+      if (item.low === null || item.high === null) return 'unknown';
+      if (item.value < item.low) return 'outside';
+      if (item.value > item.high) return 'outside';
+      return 'within';
+    }
+
+    function statusText(status) {
+      if (status === 'within') return 'Within entered range';
+      if (status === 'outside') return 'Outside entered range';
+      return 'Range not entered';
+    }
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+      const selectedFilter = filter.value;
+
+      const filtered = results
+        .filter(item => {
+          const matchesQuery =
+            item.name.toLowerCase().includes(query) ||
+            item.unit.toLowerCase().includes(query);
+
+          const status = getStatus(item);
+          const matchesFilter =
+            selectedFilter === 'all' ||
+            (selectedFilter === 'within' && status === 'within') ||
+            (selectedFilter === 'outside' && status === 'outside') ||
+            (selectedFilter === 'unknown' && status === 'unknown');
+
+          return matchesQuery && matchesFilter;
+        })
+        .sort((a, b) => b.date.localeCompare(a.date));
+
+      rows.innerHTML = filtered.map(item => {
+        const status = getStatus(item);
+        const range = item.low !== null && item.high !== null
+          ? `${item.low}–${item.high} ${escapeHTML(item.unit)}`
+          : 'Not provided';
+
+        return `<tr>
+          <td><strong>${escapeHTML(item.name)}</strong>
+            ${item.notes ? `<div class="nl-rpt-muted">${escapeHTML(item.notes)}</div>` : ''}
+          </td>
+          <td>${escapeHTML(item.date)}</td>
+          <td>${escapeHTML(item.value)} ${escapeHTML(item.unit)}</td>
+          <td>${range}</td>
+          <td><span class="nl-rpt-pill">${statusText(status)}</span></td>
+          <td><button type="button" class="nl-rpt-btn secondary"
+            data-delete="${item.id}" aria-label="Delete ${escapeHTML(item.name)}">Delete</button></td>
+        </tr>`;
+      }).join('');
+
+      empty.style.display = filtered.length ? 'none' : 'block';
+      empty.textContent = results.length
+        ? 'No results match your search or filter.'
+        : 'No results added yet. Enter a result above to begin.';
+
+      renderComparison();
+    }
+
+    function renderComparison() {
+      const groups = {};
+
+      results.forEach(item => {
+        const key = item.name.trim().toLowerCase();
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(item);
+      });
+
+      const repeatGroups = Object.values(groups)
+        .filter(group => group.length >= 2)
+        .map(group => group.sort((a, b) => a.date.localeCompare(b.date)));
+
+      if (!repeatGroups.length) {
+        comparison.textContent =
+          'Add two or more results for the same test to see their recorded values together.';
+        return;
+      }
+
+      comparison.innerHTML = repeatGroups.map(group => {
+        const testName = escapeHTML(group[0].name);
+        const values = group.map(item =>
+          `${escapeHTML(item.date)}: ${escapeHTML(item.value)} ${escapeHTML(item.unit)}`
+        ).join(' → ');
+
+        return `<p><strong>${testName}</strong><br>${values}</p>`;
+      }).join('');
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      const name = root.querySelector('#nl-rpt-name').value.trim();
+      const date = root.querySelector('#nl-rpt-date').value;
+      const value = Number(root.querySelector('#nl-rpt-value').value);
+      const unit = root.querySelector('#nl-rpt-unit').value.trim();
+      const lowRaw = root.querySelector('#nl-rpt-low').value;
+      const highRaw = root.querySelector('#nl-rpt-high').value;
+      const notes = root.querySelector('#nl-rpt-notes').value.trim();
+
+      const low = lowRaw === '' ? null : Number(lowRaw);
+      const high = highRaw === '' ? null : Number(highRaw);
+
+      if (!name || !date || !unit || !Number.isFinite(value)) return;
+
+      if ((low !== null && !Number.isFinite(low)) ||
+          (high !== null && !Number.isFinite(high)) ||
+          (low !== null && high !== null && low > high)) {
+        alert('Please check the reference range values.');
+        return;
+      }
+
+      results.push({
+        id: Date.now() + Math.random(),
+        name, date, value, unit, low, high, notes
+      });
+
+      form.reset();
+      render();
+    });
+
+    rows.addEventListener('click', event => {
+      const button = event.target.closest('[data-delete]');
+      if (!button) return;
+      results = results.filter(item => String(item.id) !== button.dataset.delete);
+      render();
+    });
+
+    search.addEventListener('input', render);
+    filter.addEventListener('change', render);
+
+    render();
+  })();
+  </script>
 </section>
 
 <section id="nutrition" class="section">
