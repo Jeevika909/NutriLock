@@ -245,40 +245,816 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
   </div>
 </section>
 
-<section id="archive" class="section">
- <div class="nl-archive">
+<!-- ================= HEALTH ARCHIVE ================= -->
+<section id="health-archive" class="ha-section">
 
-  <div class="nl-archive-header">
+  <style>
+    #health-archive {
+      --ha-bg: #f7f3ed;
+      --ha-card: #fffdf9;
+      --ha-ink: #49382f;
+      --ha-muted: #89796c;
+      --ha-line: #e5d9cc;
+      --ha-accent: #765b49;
+      background: var(--ha-bg);
+      color: var(--ha-ink);
+      padding: 28px 18px;
+      border-radius: 20px;
+      font-family: inherit;
+    }
+
+    #health-archive * {
+      box-sizing: border-box;
+    }
+
+    #health-archive .ha-wrap {
+      max-width: 950px;
+      margin: auto;
+    }
+
+    #health-archive .ha-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-size: 10px;
+      color: var(--ha-muted);
+      margin-bottom: 12px;
+    }
+
+    #health-archive h2 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: clamp(28px, 5vw, 42px);
+      margin: 0 0 8px;
+      color: var(--ha-ink);
+    }
+
+    #health-archive .ha-subtitle {
+      color: var(--ha-muted);
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 26px;
+    }
+
+    #health-archive .ha-panel {
+      background: var(--ha-card);
+      border: 1px solid var(--ha-line);
+      border-radius: 17px;
+      padding: 20px;
+      margin-bottom: 22px;
+    }
+
+    #health-archive .ha-panel-title {
+      font-family: Georgia, serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin: 0 0 18px;
+    }
+
+    #health-archive .ha-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    #health-archive .ha-field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    #health-archive .ha-full {
+      grid-column: 1 / -1;
+    }
+
+    #health-archive label {
+      font-size: 12px;
+      color: var(--ha-muted);
+    }
+
+    #health-archive input,
+    #health-archive select,
+    #health-archive textarea {
+      width: 100%;
+      border: 1px solid var(--ha-line);
+      background: #fff;
+      border-radius: 10px;
+      padding: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--ha-ink);
+      outline: none;
+    }
+
+    #health-archive input:focus,
+    #health-archive select:focus,
+    #health-archive textarea:focus {
+      border-color: var(--ha-accent);
+      box-shadow: 0 0 0 2px rgba(118, 91, 73, 0.10);
+    }
+
+    #health-archive textarea {
+      resize: vertical;
+      min-height: 95px;
+    }
+
+    #health-archive .ha-file-box {
+      border: 1px dashed #cbb9a8;
+      border-radius: 13px;
+      background: #faf7f2;
+      padding: 18px;
+      text-align: center;
+    }
+
+    #health-archive .ha-file-box input {
+      border: none;
+      padding: 10px 0 0;
+      background: transparent;
+    }
+
+    #health-archive .ha-file-note {
+      font-size: 11px;
+      color: var(--ha-muted);
+      line-height: 1.6;
+      margin-top: 7px;
+    }
+
+    #health-archive .ha-preview {
+      margin-top: 12px;
+      display: none;
+      padding: 12px;
+      background: #f3eee7;
+      border-radius: 12px;
+      text-align: left;
+      overflow-wrap: anywhere;
+    }
+
+    #health-archive .ha-preview img {
+      display: block;
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      margin: 12px auto 0;
+      border-radius: 8px;
+    }
+
+    #health-archive .ha-preview iframe {
+      width: 100%;
+      height: 350px;
+      margin-top: 12px;
+      border: 1px solid var(--ha-line);
+      border-radius: 8px;
+      background: white;
+    }
+
+    #health-archive .ha-btn {
+      border: 1px solid var(--ha-accent);
+      background: var(--ha-accent);
+      color: white;
+      padding: 12px 17px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #health-archive .ha-btn:hover {
+      opacity: 0.86;
+    }
+
+    #health-archive .ha-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #health-archive .ha-btn-outline {
+      background: transparent;
+      color: var(--ha-ink);
+      border-color: var(--ha-line);
+    }
+
+    #health-archive .ha-btn-danger {
+      background: transparent;
+      color: #9a5148;
+      border-color: #dfc6c0;
+    }
+
+    #health-archive .ha-message {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #health-archive .ha-message-error {
+      display: block;
+      color: #8c3e36;
+      background: #f8eae6;
+    }
+
+    #health-archive .ha-message-success {
+      display: block;
+      color: #536a4a;
+      background: #edf2e8;
+    }
+
+    #health-archive .ha-toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    #health-archive .ha-toolbar input {
+      flex: 1;
+      min-width: 160px;
+    }
+
+    #health-archive .ha-toolbar select {
+      width: auto;
+      min-width: 150px;
+    }
+
+    #health-archive .ha-count {
+      color: var(--ha-muted);
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    #health-archive .ha-empty {
+      text-align: center;
+      color: var(--ha-muted);
+      padding: 30px 12px;
+      border: 1px dashed var(--ha-line);
+      border-radius: 13px;
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    #health-archive .ha-report {
+      background: #fff;
+      border: 1px solid var(--ha-line);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    #health-archive .ha-report-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    #health-archive .ha-report-name {
+      font-family: Georgia, serif;
+      font-size: 19px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
+
+    #health-archive .ha-report-meta {
+      color: var(--ha-muted);
+      font-size: 11px;
+      line-height: 1.7;
+      margin-top: 5px;
+    }
+
+    #health-archive .ha-tag {
+      display: inline-block;
+      background: #f2ebe3;
+      color: #735b48;
+      padding: 5px 9px;
+      border-radius: 30px;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    #health-archive .ha-report-notes {
+      font-size: 13px;
+      color: #726357;
+      line-height: 1.6;
+      margin-top: 12px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    #health-archive .ha-report-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    #health-archive .ha-report-actions .ha-btn {
+      padding: 9px 12px;
+      font-size: 12px;
+    }
+
+    #health-archive .ha-storage-warning {
+      color: var(--ha-muted);
+      font-size: 11px;
+      line-height: 1.6;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--ha-line);
+    }
+
+    @media (max-width: 600px) {
+      #health-archive {
+        padding: 22px 12px;
+      }
+
+      #health-archive .ha-panel {
+        padding: 15px;
+      }
+
+      #health-archive .ha-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #health-archive .ha-full {
+        grid-column: auto;
+      }
+
+      #health-archive .ha-toolbar {
+        flex-direction: column;
+      }
+
+      #health-archive .ha-toolbar select {
+        width: 100%;
+      }
+
+      #health-archive .ha-report-top {
+        flex-direction: column;
+      }
+    }
+  </style>
+
+  <div class="ha-wrap">
+
+    <div class="ha-eyebrow">NutriLock · Personal Records</div>
+
     <h2>Health Archive</h2>
-    <p>Your personal health records, securely stored.</p>
-  </div>
 
-  <div class="nl-card">
-    <h3>Upload a medical report</h3>
-    <p>Store your medical documents in your personal archive.</p>
-
-    <input
-      type="file"
-      id="nl-report-file"
-      accept=".pdf,.png,.jpg,.jpeg"
-    />
-
-    <button class="nl-btn" id="nl-upload-btn" type="button">
-      Upload report
-    </button>
-
-    <p id="nl-upload-status" class="nl-muted"></p>
-  </div>
-
-  <div class="nl-card">
-    <h3>Your saved reports</h3>
-    <div id="nl-report-list">
-      <p class="nl-muted">Your uploaded reports will appear here.</p>
+    <div class="ha-subtitle">
+      A private place to organise your health documents
+      and keep your records together.
     </div>
+
+    <!-- ADD REPORT -->
+    <div class="ha-panel">
+
+      <h3 class="ha-panel-title">Add a record</h3>
+
+      <form id="ha-form">
+
+        <div class="ha-grid">
+
+          <div class="ha-field">
+            <label for="ha-title">Report title</label>
+            <input
+              id="ha-title"
+              type="text"
+              placeholder="e.g. Blood Test"
+              maxlength="100"
+              required
+            >
+          </div>
+
+          <div class="ha-field">
+            <label for="ha-category">Category</label>
+            <select id="ha-category" required>
+              <option value="">Choose category</option>
+              <option value="Blood Test">Blood Test</option>
+              <option value="Imaging">Imaging / Scan</option>
+              <option value="Prescription">Prescription</option>
+              <option value="Consultation">Consultation</option>
+              <option value="Vaccination">Vaccination</option>
+              <option value="General">General Record</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="ha-field">
+            <label for="ha-date">Record date</label>
+            <input
+              id="ha-date"
+              type="date"
+              required
+            >
+          </div>
+
+          <div class="ha-field ha-full">
+            <label for="ha-notes">Notes (optional)</label>
+            <textarea
+              id="ha-notes"
+              maxlength="1000"
+              placeholder="Add a description for this record..."
+            ></textarea>
+          </div>
+
+          <div class="ha-field ha-full">
+
+            <label for="ha-file">Report file</label>
+
+            <div class="ha-file-box">
+
+              <input
+                id="ha-file"
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                required
+              >
+
+              <div class="ha-file-note">
+                PDF or image files · Maximum 10 MB per file
+              </div>
+
+              <div
+                id="ha-preview"
+                class="ha-preview"
+              ></div>
+
+            </div>
+          </div>
+
+          <div class="ha-field ha-full">
+
+            <button
+              id="ha-submit"
+              type="submit"
+              class="ha-btn"
+            >
+              Add to Health Archive
+            </button>
+
+          </div>
+
+        </div>
+
+        <div
+          id="ha-message"
+          class="ha-message"
+          role="status"
+          aria-live="polite"
+        ></div>
+
+      </form>
+
+    </div>
+
+    <!-- REPORT HISTORY -->
+    <div class="ha-panel">
+
+      <h3 class="ha-panel-title">Your records</h3>
+
+      <div class="ha-toolbar">
+
+        <input
+          id="ha-search"
+          type="search"
+          placeholder="Search records..."
+          aria-label="Search health records"
+        >
+
+        <select
+          id="ha-filter"
+          aria-label="Filter records by category"
+        >
+          <option value="all">All categories</option>
+          <option value="Blood Test">Blood Test</option>
+          <option value="Imaging">Imaging / Scan</option>
+          <option value="Prescription">Prescription</option>
+          <option value="Consultation">Consultation</option>
+          <option value="Vaccination">Vaccination</option>
+          <option value="General">General Record</option>
+          <option value="Other">Other</option>
+        </select>
+
+      </div>
+
+      <div id="ha-count" class="ha-count">
+        0 records
+      </div>
+
+      <div id="ha-list"></div>
+
+      <div class="ha-storage-warning">
+        This version is a temporary archive. Records are held in browser
+        memory only and will disappear if you refresh, close the tab,
+        or leave the page. Files are not sent to Supabase.
+      </div>
+
+    </div>
+
   </div>
 
-</div>
-</section>
+  <script>
+  (() => {
+
+    const root = document.getElementById("health-archive");
+    if (!root || root.dataset.initialized === "true") return;
+    root.dataset.initialized = "true";
+
+    const form = root.querySelector("#ha-form");
+    const titleInput = root.querySelector("#ha-title");
+    const categoryInput = root.querySelector("#ha-category");
+    const dateInput = root.querySelector("#ha-date");
+    const notesInput = root.querySelector("#ha-notes");
+    const fileInput = root.querySelector("#ha-file");
+    const preview = root.querySelector("#ha-preview");
+    const message = root.querySelector("#ha-message");
+    const submitButton = root.querySelector("#ha-submit");
+    const searchInput = root.querySelector("#ha-search");
+    const filterInput = root.querySelector("#ha-filter");
+    const list = root.querySelector("#ha-list");
+    const count = root.querySelector("#ha-count");
+
+    // Temporary session memory only.
+    const records = [];
+
+    let selectedFile = null;
+    let previewUrl = null;
+
+    // Set today's date without UTC timezone issues.
+    const today = new Date();
+    const localToday = [
+      today.getFullYear(),
+      String(today.getMonth() + 1).padStart(2, "0"),
+      String(today.getDate()).padStart(2, "0")
+    ].join("-");
+
+    dateInput.value = localToday;
+
+    const MAX_SIZE = 10 * 1024 * 1024;
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "ha-message ha-message-" + type;
+    }
+
+    function clearMessage() {
+      message.textContent = "";
+      message.className = "ha-message";
+    }
+
+    function formatDate(dateString) {
+      if (!dateString) return "Date not specified";
+
+      const parts = dateString.split("-").map(Number);
+      if (parts.length !== 3) return dateString;
+
+      const date = new Date(parts[0], parts[1] - 1, parts[2]);
+
+      return date.toLocaleDateString(undefined, {
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) {
+        return (bytes / 1024).toFixed(1) + " KB";
+      }
+      return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+    }
+
+    function getFileKind(file) {
+      const name = file.name.toLowerCase();
+
+      if (file.type === "application/pdf" || name.endsWith(".pdf")) {
+        return "pdf";
+      }
+
+      if (
+        file.type === "image/jpeg" ||
+        name.endsWith(".jpg") ||
+        name.endsWith(".jpeg")
+      ) {
+        return "jpeg";
+      }
+
+      if (file.type === "image/png" || name.endsWith(".png")) {
+        return "png";
+      }
+
+      return null;
+    }
+
+    function releasePreview() {
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
+      }
+
+      preview.replaceChildren();
+      preview.style.display = "none";
+    }
+
+    function createPreview(file) {
+      releasePreview();
+
+      if (!file) return;
+
+      previewUrl = URL.createObjectURL(file);
+      preview.style.display = "block";
+
+      const info = document.createElement("div");
+      info.textContent = file.name + " · " + formatSize(file.size);
+      preview.appendChild(info);
+
+      const kind = getFileKind(file);
+
+      if (kind === "jpeg" || kind === "png") {
+        const image = document.createElement("img");
+        image.alt = "Selected report preview";
+        image.src = previewUrl;
+        preview.appendChild(image);
+      } else if (kind === "pdf") {
+        const pdf = document.createElement("iframe");
+        pdf.title = "PDF report preview";
+        pdf.src = previewUrl;
+        preview.appendChild(pdf);
+      }
+    }
+
+    function makeButton(text, className, action) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "ha-btn " + (className || "");
+      button.textContent = text;
+      button.addEventListener("click", action);
+      return button;
+    }
+
+    function openRecord(record) {
+      const url = URL.createObjectURL(record.file);
+
+      const newWindow = window.open(url, "_blank");
+
+      if (!newWindow) {
+        showMessage(
+          "Your browser blocked the new tab. Use Download instead.",
+          "error"
+        );
+      }
+
+      // Keep the URL alive briefly for the new tab.
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    }
+
+    function downloadRecord(record) {
+      const url = URL.createObjectURL(record.file);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = record.file.name;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+    }
+
+    function deleteRecord(id) {
+      const index = records.findIndex(record => record.id === id);
+      if (index === -1) return;
+
+      records.splice(index, 1);
+      renderRecords();
+      showMessage("Record removed from this session.", "success");
+    }
+
+    function renderRecords() {
+
+      const query = searchInput.value.trim().toLowerCase();
+      const category = filterInput.value;
+
+      const filtered = records
+        .filter(record => {
+          const matchesSearch =
+            record.title.toLowerCase().includes(query) ||
+            record.category.toLowerCase().includes(query) ||
+            record.notes.toLowerCase().includes(query) ||
+            record.file.name.toLowerCase().includes(query);
+
+          const matchesCategory =
+            category === "all" || record.category === category;
+
+          return matchesSearch && matchesCategory;
+        })
+        .sort((a, b) => b.date.localeCompare(a.date));
+
+      count.textContent =
+        filtered.length + (filtered.length === 1 ? " record" : " records");
+
+      list.replaceChildren();
+
+      if (filtered.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "ha-empty";
+
+        empty.textContent = records.length === 0
+          ? "Your archive is empty. Add your first record above."
+          : "No records match your search.";
+
+        list.appendChild(empty);
+        return;
+      }
+
+      filtered.forEach(record => {
+
+        const card = document.createElement("article");
+        card.className = "ha-report";
+
+        const top = document.createElement("div");
+        top.className = "ha-report-top";
+
+        const details = document.createElement("div");
+
+        const name = document.createElement("div");
+        name.className = "ha-report-name";
+        name.textContent = record.title;
+
+        const meta = document.createElement("div");
+        meta.className = "ha-report-meta";
+        meta.textContent =
+          formatDate(record.date) + " · " +
+          record.file.name + " · " +
+          formatSize(record.file.size);
+
+        details.append(name, meta);
+
+        const tag = document.createElement("span");
+        tag.className = "ha-tag";
+        tag.textContent = record.category;
+
+        top.append(details, tag);
+        card.appendChild(top);
+
+        if (record.notes) {
+          const notes = document.createElement("div");
+          notes.className = "ha-report-notes";
+          notes.textContent = record.notes;
+          card.appendChild(notes);
+        }
+
+        const actions = document.createElement("div");
+        actions.className = "ha-report-actions";
+
+        actions.appendChild(
+          makeButton("View", "", () => openRecord(record))
+        );
+
+        actions.appendChild(
+          makeButton("Download", "ha-btn-outline", () => downloadRecord(record))
+        );
+
+        actions.appendChild(
+          makeButton("Delete", "ha-btn-danger", () => deleteRecord(record.id))
+        );
+
+        card.appendChild(actions);
+        list.appendChild(card);
+
+      });
+    }
+
+    // Preview selected file
+    fileInput.addEventListener("change", () => {
+      clearMessage();
+
+      const file = fileInput.files && fileInput.files[0];
+      selectedFile = null;
+
+      releasePreview();
+
+      if (!file) return;
+
+      const kind = getFileKind(file);
+
+      if (!kind) {
+        fileInput.value = "";
+        showMessage(
+          "Unsupported file. Please choose a PDF, JPG, JPEG, or PNG file.",
+          "error"
+        );
+        return;
+      }
+
+      if (file.size > MAX_SIZE) {
+        fileInput.value = "";
+        showMessage("File is too large. Maximum size is 10 MB.", "error");
+        return;
+      }
+
+      if (file.size === 0) {
 
 <section id="reports" class="nl-reports">
   <style>
