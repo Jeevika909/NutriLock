@@ -1003,25 +1003,33 @@ footer{border-top:1px solid var(--line);margin-top:60px;padding:25px 0;color:var
   </div>
 </div>
 
-  <!-- PERSONAL NOTES -->
-  <div class="ni-card">
-    <h3>My nutrition notes</h3>
-    <p class="ni-muted">
-      Keep questions, favourite meals, recipe ideas or notes
-      you'd like to discuss with a trusted adult or health professional.
-    </p>
-    <form id="ni-notes-form">
-      <label>
-        Note
-        <textarea id="ni-note-text" placeholder="Write your note here..."></textarea>
-      </label>
-      <button class="ni-btn" type="submit">Save note</button>
-    </form>
-    <div id="ni-notes-list"></div>
-    <div id="ni-notes-empty" class="ni-empty">
-      No personal notes yet.
+<!-- MEAL RHYTHM -->
+<div class="ni-card">
+  <h3>Meal rhythm</h3>
+  <p class="ni-muted">
+    An overview of meals you've recorded in your food journal.
+    This is simply a view of your entries, not a target or score.
+  </p>
+
+  <div class="ni-food-grid" id="ni-meal-rhythm">
+    <div class="ni-food">
+      <strong>Breakfast</strong>
+      <span id="ni-count-breakfast">0 entries</span>
+    </div>
+    <div class="ni-food">
+      <strong>Lunch</strong>
+      <span id="ni-count-lunch">0 entries</span>
+    </div>
+    <div class="ni-food">
+      <strong>Dinner</strong>
+      <span id="ni-count-dinner">0 entries</span>
+    </div>
+    <div class="ni-food">
+      <strong>Snacks</strong>
+      <span id="ni-count-snack">0 entries</span>
     </div>
   </div>
+</div>
 
   <div class="ni-note">
     <strong>About Nutrition Intelligence</strong><br>
